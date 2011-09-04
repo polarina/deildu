@@ -1,0 +1,24 @@
+!!! 5
+%html
+  %head
+    %title Deildu
+    = stylesheet_link_tag    "application"
+    = javascript_include_tag "application"
+    = csrf_meta_tags
+  %body
+    #navigation
+      %ul
+        %li= link_to "Aðalsíða", "#"
+        %li= link_to "Torrent", "#"
+        %li= link_to "Deila", "#"
+        %li= link_to "Spjallborð", "#"
+        %li= link_to "Eftirspurnir", "#"
+        %li= link_to "Prófíll", "#"
+        %li= link_to "Hjálp", "#"
+        %li= link_to "Reglur", "#"
+        %li= link_to "SOS", "#"
+        %li= link_to "Stjórnendur", "#"
+    #content
+      = yield
+    #notice
+      %p Knúið af ókunnugu kerfi. Notkun síðunar jafngildir samþykki notendaskilmála.
