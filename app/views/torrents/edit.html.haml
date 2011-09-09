@@ -1,0 +1,20 @@
+%section
+  %h2 Breyta Torrent
+  
+  = form_for @torrent do |f|
+    = f.error_messages
+    
+    %div
+      = f.label :title, "Nafn"
+      = f.text_field :title
+    
+    %div
+      = f.label :category_id, "Flokkur"
+      = f.select :category_id, Category.all.collect{|c| [c.title, c.id]}
+    
+    %div
+      = f.label :description, "Lýsing"
+      = f.text_area :description, :size => "10x7"
+    
+    %div
+      = f.submit "Breyta"

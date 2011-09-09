@@ -1,0 +1,36 @@
+%section
+  %h2 Nýskráning
+  - if @invitation.nil?
+    %p
+      Nýskráning er eingöngu opin þeim sem hafa fengið boðslykil gefins frá
+      nú þegar skráðum notanda. Vinsamlegast útvegið slíkum boðslykli eða reynið aftur
+      síðar.
+  - else
+    = form_for @user, :html => { :autocomplete => :off } do |f|
+      = f.error_messages
+      = hidden_field_tag :invitation, params[:invitation]
+      
+      %div
+        = f.label :username, "Notendanafn"
+        = f.text_field :username
+      
+      %div
+        = f.label :password, "Lykilorð"
+        = f.password_field :password
+      
+      %div
+        = f.label :password_confirmation, "Lykilorð aftur"
+        = f.password_field :password_confirmation
+      
+      %div
+        = f.label :email, "Tölvupóstfang"
+        = f.text_field :email, :disabled => true
+      
+      %div
+        %p
+          Vefsíða þessi er einkarekið vefsvæði. Með nýskráningu staðfestir þú að þú
+          hafir kynnt þér skilmála vefsvæðisins og samþykkir að fara eftir ákvæðum
+          þess.
+      
+      %div
+        = f.submit "Nýskrá"

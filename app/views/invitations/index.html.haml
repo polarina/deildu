@@ -1,0 +1,51 @@
+%section
+  %h2 Nýr boðslykill
+  = form_for [@user, @invitation] do |f|
+    = f.error_messages
+    
+    %div
+      = f.label :email, "Netfang"
+      = f.text_field :email
+    
+    %div
+      = f.submit "Senda boðslykil"
+
+%section
+  %h2 Innboðnir notendur
+  
+  %table
+    %thead
+      %tr
+        %th Skráningardagur
+        %th.expand Notendanafn
+    %tbody
+      - @invitees.each do |invitee|
+        %tr
+          %td.nowrap= invitee.created_at
+          %td= link_to invitee.username, invitee
+      - if @invitees.empty?
+        %tr
+          %td.notice{:colspan => 2}
+            Þú hefur ekki boðið inn neinum notendum.
+
+%section
+  %h2 Boðslyklar
+  
+  %table
+    %thead
+      %tr
+        %th Útgáfudagur
+        %th Netfang
+        %th.expand Vefslóð á nýskráningarsíðu
+        %th Eyða
+    %tbody
+      - @invitations.each do |invitation|
+        %tr
+          %td.nowrap= invitation.created_at
+          %td= invitation.email
+          %td= new_user_url(:host => request.host, :invitation => invitation.key)
+          %td= link_to "Eyða", {:action => "destroy", :controller => "invitations", :user_id => @user, :id => invitation}, :method => :delete
+      - if @invitations.blank?
+        %tr
+          %td.notice{:colspan => 4}
+            Engir útgefnir boðslyklar.

@@ -1,0 +1,12 @@
+%section
+  %h2= @user.username
+  
+  %dl
+    %dt Skráð
+    %dd= @user.created_at
+    %dt Upphalað
+    %dd= number_to_human_size(@user.uploaded)
+    %dt Niðurhalað
+    %dd= number_to_human_size(@user.downloaded)
+    %dt Hlutfall
+    %dd= @user.ratio

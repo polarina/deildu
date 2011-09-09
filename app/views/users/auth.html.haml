@@ -1,0 +1,16 @@
+%section
+  %h2 Innskráning
+  = form_for @user, :url => auth_users_path do |f|
+    - if @return
+      = hidden_field_tag :return, @return
+    
+    %div
+      = f.label :username, "Notendanafn"
+      = f.text_field :username
+    
+    %div
+      = f.label :password, "Lykilorð"
+      = f.password_field :password
+    
+    %div
+      = f.submit "Innskrá"

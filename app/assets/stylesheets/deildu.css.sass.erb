@@ -3,6 +3,16 @@ body
   font-family: Helvetica, sans-serif
   font-size: 14px
 
+#logo
+  position: absolute
+  margin: 0 auto
+  top: 18px
+  left: 50%
+  height: 102px
+  width: 350px
+  margin-left: -485px
+  background-color: transparent
+
 #navigation
   background: image-url("menu_bg.png") no-repeat
   margin: 0 auto
@@ -45,9 +55,161 @@ body
   border-radius: 8px
   -moz-border-radius: 8px
   -webkit-border-radius: 8px
+  
+  h2
+    font-size: 1.3em
+    font-weight: bold
+    margin-bottom: 1em
+  
+  p
+    line-height: 1.2
+    
+  ul
+    margin-left: 2em
+    list-style-type: disc
+  
+  section
+    margin-bottom: 1.2em
+    
+    &:last-child
+      margin: 0
+  
+  table
+    border: 1px solid gray
+    width: 100%
+    font-size: 12px
+    
+    thead
+      background-color: #242424
+      color: #cbcbcb
+    
+    th
+      height: 17px
+      text-align: left
+      width: 0
+      
+      &.expand
+        width: 100%
+      
+      &.center
+        text-align: center
+    
+    td, th
+      vertical-align: middle
+      padding: 4px 10px // 2em
+      
+      &.nopad
+        padding: 0
+        font-size: 0
+      
+      &.nowrap
+        white-space: nowrap
+      
+      &.notice
+        text-align: center
+        font-size: 1.5em
+        color: dimgrey
+        height: 2.2em
+  
+  dl
+    width: 100%
+    
+    dt
+      float: left
+      text-align: right
+      width: 140px
+      padding: 4px
+      font-weight: bold
+    
+    dd
+      padding: 4px
+      margin-left: 148px
+  
+  form
+    fieldset
+      margin-top: 1.5em
+      
+      &:first-child
+        margin: 0
+    
+    > div
+      display: block
+      margin-bottom: 0.5em
+      clear: left
+      
+      &.errorExplanation
+        margin: 0 auto
+        //margin-left: 140px
+        margin-bottom: 1em
+        width: 90%
+        padding: 1em
+        border: 2px solid crimson
+        background-color: lightpink
+        
+        h2
+          margin-bottom: 0.5em
+        
+        p
+          margin: 0
+          margin-bottom: 0.2em
+    
+    label
+      float: left
+      width: 140px
+      font-weight: bold
+      text-align: right
+      line-height: 16px
+      margin: 4px 0
+    
+    input, textarea, select
+      width: 75%
+      vertical-align: middle
+      margin: 0 8px
+      border: 1px solid dimgrey
+      font-size: 1.1em
+      box-sizing: border-box
+      -webkit-box-sizing:border-box
+      -moz-box-sizing: border-box
+      -ms-box-sizing: border-box
+    
+    p
+      margin-left: 148px
+      width: 75%
+    
+    input[type=submit]
+      clear: both
+      width: auto
+      margin-left: 148px
+    
+    .field_with_errors
+      input, textarea, select
+        border: 1px solid red
 
 #notice
   width: 970px
   margin: 20px auto
   text-align: center
   color: #666666
+
+#status
+  padding: 10px 20px
+  margin: 0 auto
+  margin-bottom: 10px
+  width: 930px
+  background: white
+  border-radius: 8px
+  -moz-border-radius: 8px
+  -webkit-border-radius: 8px
+  
+  ul
+    &.right
+      float: right
+    
+    li
+      position: relative
+      display: inline-block
+      list-style-type: disc
+      margin-left: 2em
+      
+      &:first-child
+        margin: 0

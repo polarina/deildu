@@ -1,0 +1,28 @@
+%section
+  %h2 Innsending Torrents
+  
+  = form_for @torrent do |f|
+    = f.error_messages
+    
+    %div
+      = f.label :title, "Titill"
+      = f.text_field :title
+    
+    %div
+      = f.label :torrent, "Torrent skrá"
+      = f.file_field :torrent, :size => 60
+    
+    %div
+      = f.label :category_id, "Flokkur"
+      = f.select :category_id, Category.all.collect{|c| [c.title, c.id]}, :include_blank => "-- Veljið --"
+    
+    %div
+      = f.label :anonymous, "Nafnlaust"
+      = f.check_box :anonymous, :style => "width: auto"
+    
+    %div
+      = f.label :description, "Lýsing"
+      = f.text_area :description, :size => "10x7"
+    
+    %div
+      = f.submit "Senda inn"
