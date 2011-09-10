@@ -1,35 +1,12 @@
-%table
-  %thead
-    %tr
-      %th.center Flokkur
-      %th.expand Nafn
-      %th DL
-      %th Skrár
-      %th Ath.
-      %th.nowrap Sent Inn
-      %th Stærð
-      %th Sótt
-      %th= image_tag("arrow_up.png", :alt => "Deilendur")
-      %th= image_tag("arrow_down.png", :alt => "Skráarsugur")
-      %th.nowrap Sent Inn Af
-  %tbody
-    - @torrents.each do |torrent|
-      %tr
-        %td.nopad= image_tag(Category.image_path(torrent.category_id), :alt => torrent.category_title)
-        %td= link_to torrent.title, torrent
-        %td= link_to image_tag("download.png", :alt => "Download"), torrent_path(torrent, :format => :torrent)
-        %td= torrent.fyles_count
-        %td= torrent.comments_count
-        %td.nowrap= torrent.created_at
-        %td.nowrap= number_to_human_size torrent.size
-        %td ?
-        %td= torrent.seeders_count
-        %td= torrent.leechers_count
-        - if torrent.anonymous
-          %td.italic Nafnlaust
-        - else
-          %td= link_to torrent.username, user_path(torrent.username)
-    - if @torrents.empty?
-      %tr
-        %td.notice{:colspan => 11}
-          Engin torrent.
+= form_for :search, :method => :get do |f|
+  %div
+    = f.label :search, "Leita"
+    = f.text_field :search
+  
+  %div
+    = f.label :categories, "Flokkar"
+  
+  %div
+    = f.submit "Leita"
+
+- torrent_overview @torrents, :empty_message => "Engin torrent."

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110908210500) do
+ActiveRecord::Schema.define(:version => 20110910163700) do
 
   create_table "categories", :force => true do |t|
     t.string "title", :null => false
@@ -74,22 +74,18 @@ ActiveRecord::Schema.define(:version => 20110908210500) do
   add_index "peers", ["user_id"], :name => "index_peers_on_user_id"
 
   create_table "torrents", :force => true do |t|
-    t.datetime "created_at",                                                      :null => false
-    t.datetime "updated_at",                                                      :null => false
-    t.string   "title",                                                           :null => false
-    t.boolean  "anonymous",                                                       :null => false
-    t.integer  "user_id",                                                         :null => false
-    t.integer  "category_id",                                                     :null => false
-    t.text     "description",                                                     :null => false
-    t.decimal  "size",              :precision => 45, :scale => 0,                :null => false
-    t.binary   "infohash",                                                        :null => false
-    t.string   "info_name",                                                       :null => false
-    t.integer  "info_piece_length",                                               :null => false
-    t.binary   "info_pieces",                                                     :null => false
-    t.integer  "comments_count",                                   :default => 0, :null => false
-    t.integer  "fyles_count",                                      :default => 0, :null => false
-    t.integer  "leechers_count",                                   :default => 0, :null => false
-    t.integer  "seeders_count",                                    :default => 0, :null => false
+    t.datetime "created_at",                                       :null => false
+    t.datetime "updated_at",                                       :null => false
+    t.string   "title",                                            :null => false
+    t.boolean  "anonymous",                                        :null => false
+    t.integer  "user_id",                                          :null => false
+    t.integer  "category_id",                                      :null => false
+    t.text     "description",                                      :null => false
+    t.decimal  "size",              :precision => 45, :scale => 0, :null => false
+    t.binary   "infohash",                                         :null => false
+    t.string   "info_name",                                        :null => false
+    t.integer  "info_piece_length",                                :null => false
+    t.binary   "info_pieces",                                      :null => false
   end
 
   add_index "torrents", ["category_id"], :name => "index_torrents_on_category_id"
@@ -105,6 +101,7 @@ ActiveRecord::Schema.define(:version => 20110908210500) do
     t.decimal  "downloaded",                     :precision => 45, :scale => 0, :default => 0, :null => false
     t.decimal  "uploaded",                       :precision => 45, :scale => 0, :default => 0, :null => false
     t.integer  "inviter_id"
+    t.string   "key",                                                                          :null => false
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

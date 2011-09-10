@@ -30,11 +30,32 @@ class User < ActiveRecord::Base
   validates :uploaded,
     :numericality => { :greater_than_or_equal_to => 0 }
   
+  before_create do
+    self.update_passkey
+  end
+  
   def to_param
     self.username
   end
   
   def ratio
     self.uploaded.to_f / self.downloaded.to_f
+  end
+  
+  def update_passkey
+    self.key = SecureRandom::urlsafe_base64(16)
+  end
+  
+  def uploaded_overview
+    user = self.id
+    Torrent.overview.where{user_id == user}
+  end
+  
+  def leeching_overview
+    Torrent.overview.joins{peers}.where{peers.left != 0}
+  end
+  
+  def seeding_overview
+    Torrent.overview.joins{peers}.where{peers.left == 0}
   end
 end

@@ -28,4 +28,17 @@ class Peer < ActiveRecord::Base
   
   validates :left,
     :numericality => { :only_integer => true }
+  
+  after_update do
+    if self.uploaded < self.uploaded_was or self.downloaded < self.downloaded_was
+      # Peer is cheating
+    else
+      downloaded = self.downloaded - self.downloaded_was
+      uploaded = self.uploaded - self.uploaded_was
+      
+      unless downloaded == 0 and uploaded == 0
+        User.update_counters self.user_id, :downloaded => downloaded, :uploaded => uploaded
+      end
+    end
+  end
 end

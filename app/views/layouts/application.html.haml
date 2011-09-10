@@ -36,8 +36,8 @@
             = link_to current_user.username, current_user
           %li= link_to "Boðslyklar", user_invitations_path(current_user)
         %ul
-          %li Hlutfall: #{current_user.ratio}
-          %li Deild: #{number_to_human_size current_user.uploaded}
+          %li Hlutfall: #{number_with_precision current_user.ratio}
+          %li Deilt: #{number_to_human_size current_user.uploaded}
           %li Sótt: #{number_to_human_size current_user.downloaded}
     #content
       = yield

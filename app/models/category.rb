@@ -9,6 +9,12 @@ class Category < ActiveRecord::Base
     {
       1 => "categories/dvd-r.png",
       2 => "categories/annad.png",
+      3 => "categories/hi-def.png",
+      4 => "categories/leikir.png",
     }[id]
+  end
+  
+  def image_size
+    "63x36"
   end
 end

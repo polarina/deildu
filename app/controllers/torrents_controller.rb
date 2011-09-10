@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 class TorrentsController < ApplicationController
-  skip_before_filter :requires_authorization, :only => :announce
+  skip_before_filter :requires_authorization, :only => [:announce, :scrape]
   respond_to :html
   
   def create
@@ -69,5 +69,24 @@ class TorrentsController < ApplicationController
   end
   
   def scrape
+    render :text => { }.bencode and return if params[:info_hash].nil?
+    
+    @torrent = Torrent.find_by_infohash params[:info_hash]
+    render :text => { "failure reason" => "Torrent ekki á skrá" }.bencode and return if @torrent.nil?
+    
+    render :text => {
+      "files" => {
+        @torrent.infohash => {
+          "complete" => @torrent.peers.seeders.count,
+          "downloaded" => 0, #todo
+          "incomplete" => @torrent.peers.leechers.count,
+          "name" => @torrent.info_name
+          
+        }
+      },
+      "flags" => {
+        "min_request_interval" => 5.minutes.to_i
+      }
+    }.bencode
   end
 end

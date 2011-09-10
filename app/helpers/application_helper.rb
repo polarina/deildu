@@ -1,2 +1,48 @@
+# encoding: utf-8
+
 module ApplicationHelper
+  def torrent_overview(torrent, options = { })
+    c = 0
+    
+    haml_tag :table do
+      haml_tag :thead do
+        c += 1 and haml_tag :th, "Flokkur", :class => :center
+        c += 1 and haml_tag :th, "Nafn", :class => :expand
+        c += 1 and haml_tag :th, "DL" unless options[:download] == false
+        c += 1 and haml_tag :th, "Skrár"
+        c += 1 and haml_tag :th, "Ath."
+        c += 1 and haml_tag :th, "Sent Inn", :class => :nowrap unless options[:created_at] == false
+        c += 1 and haml_tag :th, "Stærð"
+        c += 1 and haml_tag :th, "Sótt"
+        c += 1 and haml_tag :th, image_tag("arrow_up.png", :alt => "Deilendur")
+        c += 1 and haml_tag :th, image_tag("arrow_down.png", :alt => "Skráarsugur")
+      end
+      
+      haml_tag :tbody do
+        torrent.each do |t|
+          category = Category.new
+          category.id = t.category_id
+          
+          haml_tag :tr do
+            haml_tag :th, image_tag(category.image_path, :size => category.image_size, :alt => t.category_title), :class => :nopad
+            haml_tag :th, link_to(t.title, t)
+            haml_tag :th, link_to(image_tag("download.png", :alt => "Download"), torrent_path(t, :format => :torrent)) unless options[:download] == false
+            haml_tag :th, (t.fyles_count.to_i == 0 ? 1 : t.fyles_count)
+            haml_tag :th, t.comments_count
+            haml_tag :th, t.created_at, :class => :nowrap unless options[:created_at] == false
+            haml_tag :th, number_to_human_size(t.size), :class => :nowrap
+            haml_tag :th, "?"
+            haml_tag :th, t.seeders_count
+            haml_tag :th, t.leechers_count
+          end
+        end
+        
+        if torrent.empty? and not options[:empty_message].nil?
+          haml_tag :tr do
+            haml_tag :td, options[:empty_message], :colspan => c, :class => :notice
+          end
+        end
+      end
+    end
+  end
 end
