@@ -18,14 +18,11 @@
           %li= link_to "Prófíll", "#"
           %li= link_to "Hjálp", "#"
           %li= link_to "Reglur", "#"
-          %li= link_to "SOS", "#"
-          %li= link_to "Stjórnendur", "#"
         - else
           %li= link_to "Innskráning", auth_users_path
           %li= link_to "Nýskráning", new_user_path
           %li= link_to "Hjálp", "#"
           %li= link_to "Reglur", "#"
-          %li= link_to "SOS", "#"
     - unless current_user.nil?
       #status
         %ul.right
