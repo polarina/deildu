@@ -15,7 +15,7 @@
       - torrent_overview @user.uploaded_overview, :download => false, :user => false, :empty_message => "Engin innsend torrent."
     %dt Deili
     %dd
-      - torrent_overview @user.seeding_overview, :download => false, :created_at => false, :user => false
+      - torrent_overview @user.seeding_overview, :download => false, :created_at => false, :user => false, :empty_message => "Engin torrent í deilingu."
     %dt Sækji
     %dd
-      - torrent_overview @user.leeching_overview, :download => false, :created_at => false, :user => false
+      - torrent_overview @user.leeching_overview, :download => false, :created_at => false, :user => false, :empty_message => "Ekki að sækja nein torrent."

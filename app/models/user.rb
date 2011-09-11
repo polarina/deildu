@@ -52,10 +52,12 @@ class User < ActiveRecord::Base
   end
   
   def leeching_overview
-    Torrent.overview.joins{peers}.where{peers.left != 0}
+    user = self.id
+    Torrent.overview.joins{peers}.where{(peers.left != 0) & (peers.user_id == user)}
   end
   
   def seeding_overview
-    Torrent.overview.joins{peers}.where{peers.left == 0}
+    user = self.id
+    Torrent.overview.joins{peers}.where{(peers.left == 0) & (peers.user_id == user)}
   end
 end
