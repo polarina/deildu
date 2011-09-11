@@ -12,10 +12,10 @@
     %dd= number_with_precision @user.ratio
     %dt Innsend torrent
     %dd
-      - torrent_overview @user.uploaded_overview, :download => false, :empty_message => "Engin innsend torrent."
+      - torrent_overview @user.uploaded_overview, :download => false, :user => false, :empty_message => "Engin innsend torrent."
     %dt Deili
     %dd
-      - torrent_overview @user.seeding_overview, :download => false, :created_at => false
+      - torrent_overview @user.seeding_overview, :download => false, :created_at => false, :user => false
     %dt Sækji
     %dd
-      - torrent_overview @user.leeching_overview, :download => false, :created_at => false
+      - torrent_overview @user.leeching_overview, :download => false, :created_at => false, :user => false

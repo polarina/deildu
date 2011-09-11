@@ -1,6 +1,11 @@
 # encoding: utf-8
 
 module ApplicationHelper
+  def markdown(text)
+    options = [:hard_wrap, :filter_html, :autolink, :no_intraemphasis, :fenced_code, :gh_blockcode]
+    Redcarpet.new(text, *options).to_html
+  end
+  
   def torrent_overview(torrent, options = { })
     c = 0
     
@@ -16,6 +21,7 @@ module ApplicationHelper
         c += 1 and haml_tag :th, "Sótt"
         c += 1 and haml_tag :th, image_tag("arrow_up.png", :alt => "Deilendur")
         c += 1 and haml_tag :th, image_tag("arrow_down.png", :alt => "Skráarsugur")
+        c += 1 and haml_tag :th, "Sent Inn Af", :class => :nowrap unless options[:user] == false
       end
       
       haml_tag :tbody do
@@ -34,6 +40,14 @@ module ApplicationHelper
             haml_tag :th, "?"
             haml_tag :th, t.seeders_count
             haml_tag :th, t.leechers_count
+            
+            unless options[:user] == false
+              if t.anonymous
+                haml_tag :th, "Nafnlaust", :class => :italic
+              else
+                haml_tag :th, link_to(t.username, user_path(t.username))
+              end
+            end
           end
         end
         

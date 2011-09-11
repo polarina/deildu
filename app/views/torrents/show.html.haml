@@ -1,5 +1,5 @@
 %section
-  %h2= @torrent.title
+  %h2= link_to @torrent.title, edit_torrent_path(@torrent)
   
   %dl
     %dt Niðurhal
@@ -9,24 +9,25 @@
     %dt Tékksumma
     %dd= @torrent.infohash_hex
     %dt Lýsing
-    %dd= @torrent.description
+    %dd!= markdown(@torrent.description)
     - unless @torrent.fyles.blank?
       %dt Skrár
       %dd
         %table
           %thead
-            %th Stærð
-            %th.expand Skráarnafn
+            %tr
+              %th Stærð
+              %th.expand Skráarnafn
           %tbody
             - @torrent.fyles.oby_path.each do |fyle|
               %tr
                 %td.nowrap= number_to_human_size(fyle.size)
                 %td= fyle.path
-      %dt Innsendandi
-      - if @torrent.anonymous
-        %dd.italic Nafnlaus
-      - else
-        %dd= link_to @torrent.user.username, @torrent.user
+    %dt Innsendandi
+    - if @torrent.anonymous
+      %dd.italic Nafnlaus
+    - else
+      %dd= link_to @torrent.user.username, @torrent.user
 
 %section
   %h2 Athugasemdir

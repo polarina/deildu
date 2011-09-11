@@ -49,8 +49,8 @@ test:
 production:
   adapter: postgresql
   encoding: unicode
-  database: deildu-prod
+  database: deildu-dev
   pool: 5
   username: postgres
   password: draslkanina
-
+  host: localhost

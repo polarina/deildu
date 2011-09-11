@@ -13,8 +13,12 @@
       = f.select :category_id, Category.all.collect{|c| [c.title, c.id]}
     
     %div
+      = f.label :anonymous, "Nafnlaust"
+      = f.check_box :anonymous, :style => "width: auto"
+    
+    %div
       = f.label :description, "Lýsing"
-      = f.text_area :description, :size => "10x7"
+      = f.text_area :description, :size => "10x12"
     
     %div
       = f.submit "Breyta"
