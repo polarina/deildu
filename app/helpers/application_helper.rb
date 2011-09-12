@@ -3,7 +3,7 @@
 module ApplicationHelper
   def markdown(text)
     options = [:hard_wrap, :filter_html, :autolink, :no_intraemphasis, :fenced_code, :gh_blockcode]
-    Redcarpet.new(text, *options).to_html
+    find_and_preserve(Redcarpet.new(text, *options).to_html)
   end
   
   def torrent_overview(torrent, options = { })

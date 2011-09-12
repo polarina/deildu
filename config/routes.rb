@@ -14,8 +14,8 @@ Deildu::Application.routes.draw do
     end
   end
   
-  match "announce", :to => "torrents#announce"
-  match "scrape", :to => "torrents#scrape"
+  match "announce" => "torrents#announce", :via => :get
+  match "scrape" => "torrents#scrape", :via => :get
   
   root :to => "front#index"
 end

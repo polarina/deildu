@@ -1,4 +1,4 @@
-%section
+.section
   %h2 Nýr boðslykill
   = form_for [@user, @invitation] do |f|
     = f.error_messages
@@ -10,7 +10,7 @@
     %div
       = f.submit "Senda boðslykil"
 
-%section
+.section
   %h2 Innboðnir notendur
   
   %table
@@ -28,7 +28,7 @@
           %td.notice{:colspan => 2}
             Þú hefur ekki boðið inn neinum notendum.
 
-%section
+.section
   %h2 Boðslyklar
   
   %table

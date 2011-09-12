@@ -1,5 +1,8 @@
-%section
-  %h2= link_to @torrent.title, edit_torrent_path(@torrent)
+.section
+  %ul.controls
+    %li= link_to "Breyta", edit_torrent_path(@torrent)
+    %li= link_to "Eyða", @torrent, :method => :delete, :confirm => "Ertu viss um að þú viljir eyða þessu torrenti?"
+  %h2= @torrent.title
   
   %dl
     %dt Niðurhal
@@ -29,5 +32,5 @@
     - else
       %dd= link_to @torrent.user.username, @torrent.user
 
-%section
+.section
   %h2 Athugasemdir

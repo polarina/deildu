@@ -56,18 +56,24 @@ body
   -moz-border-radius: 8px
   -webkit-border-radius: 8px
   
-  p
-    line-height: 1.2
+  .section
+    margin-top: 1.2em
     
-  ul
-    margin-left: 2em
-    list-style-type: disc
-  
-  section
-    margin-bottom: 1.2em
-    
-    &:last-child
+    &:first-child
       margin: 0
+    
+    .controls
+      float: right
+      
+      li
+        float: left
+        font-size: 1.3em
+        font-weight: bold
+        margin-left: 1.5em
+        list-style-type: disc
+        
+        &:first-child
+          list-style: none
     
     > h2
       font-size: 1.3em
@@ -84,19 +90,16 @@ body
       color: #cbcbcb
     
     th
-      height: 17px
       text-align: left
       width: 0
+      height: 17px
       
       &.expand
         width: 100%
-      
-      &.center
-        text-align: center
     
     td, th
       vertical-align: middle
-      padding: 4px 10px // 2em
+      padding: 4px 10px
       
       &.nopad
         padding: 0
@@ -110,6 +113,9 @@ body
         font-size: 1.5em
         color: dimgrey
         height: 2.2em
+      
+      &.center
+        text-align: center
   
   dl
     width: 100%
@@ -139,7 +145,6 @@ body
       
       &.errorExplanation
         margin: 0 auto
-        //margin-left: 140px
         margin-bottom: 1em
         width: 90%
         padding: 1em
@@ -148,6 +153,8 @@ body
         
         h2
           margin-bottom: 0.5em
+          font-size: 1.3em
+          font-weight: bold
         
         p
           margin: 0
