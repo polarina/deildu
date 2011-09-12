@@ -1,0 +1,23 @@
+.section
+  - if @page.new_record?
+    %h2 Ný síða
+  - else
+    %h2 Breyta síðu
+  
+  = form_for @page do |f|
+    = f.error_messages
+    
+    %div
+      = f.label :section, "Flokkur"
+      = f.select :section, [%w[help help], %w[rules rules]]
+    
+    %div
+      = f.label :uri, "URI"
+      = f.text_field :uri
+    
+    %div
+      = f.label :entry, "Texti"
+      = f.text_area :entry, :size => "10x12"
+    
+    %div
+      = f.submit "Vista"

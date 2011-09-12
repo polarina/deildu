@@ -1,0 +1,20 @@
+.section
+  %ul.controls
+    %li= link_to "Nýtt", new_page_path
+    %li= link_to "Annað", new_page_path
+  %h2 Síður
+  
+  %table
+    %thead
+      %th Section
+      %th.expand URI
+      %th.nowrap Síðast uppfært
+    %tbody
+      - @pages.each do |page|
+        %tr
+          %td= page.section
+          %td= link_to page.uri, edit_page_path(page)
+          %td.nowrap= page.created_at
+      - if @pages.empty?
+        %tr
+          %td.notice{:colspan => 3} Engar síður.

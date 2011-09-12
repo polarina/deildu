@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110910163700) do
+ActiveRecord::Schema.define(:version => 20110911183100) do
 
   create_table "categories", :force => true do |t|
     t.string "title", :null => false
@@ -56,6 +56,16 @@ ActiveRecord::Schema.define(:version => 20110910163700) do
     t.string   "title",      :null => false
     t.text     "news",       :null => false
   end
+
+  create_table "pages", :force => true do |t|
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.string   "section",    :null => false
+    t.string   "uri",        :null => false
+    t.text     "entry",      :null => false
+  end
+
+  add_index "pages", ["section", "uri"], :name => "index_pages_on_section_and_uri", :unique => true
 
   create_table "peers", :force => true do |t|
     t.datetime "created_at",                                :null => false
