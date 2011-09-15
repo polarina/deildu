@@ -1,0 +1,15 @@
+.section
+  - if @comment.new_record?
+    %h2 Ný athugasemd
+  - else
+    %h2 Breyta athugasemd
+  
+  = form_for [@torrent, @comment] do |f|
+    = f.error_messages
+    
+    %div
+      = f.label :comment, "Athugasemd"
+      = f.text_area :comment, :size => "10x12"
+    
+    %div
+      = f.submit

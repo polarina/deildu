@@ -4,7 +4,11 @@ Deildu::Application.routes.draw do
   end
   
   resources :pages
-  resources :torrents
+  
+  resources :torrents do
+    resources :comments
+  end
+  
   resources :users do
     resources :invitations
     

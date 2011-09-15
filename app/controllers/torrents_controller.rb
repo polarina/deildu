@@ -1,5 +1,8 @@
 # encoding: utf-8
 
+class TrackerError < StandardError
+end
+
 class TorrentsController < ApplicationController
   skip_before_filter :requires_authorization, :only => [:announce, :scrape]
   respond_to :html
@@ -25,10 +28,11 @@ class TorrentsController < ApplicationController
   
   def show
     @torrent = Torrent.find(params[:id])
+    @comments = Comment.includes(:user).find_all_by_torrent_id(@torrent.id)
     
     respond_to do |format|
       format.html
-      format.torrent { render :text => @torrent.torrent_file.bencode }
+      format.torrent { render :text => @torrent.torrent_file(current_user).bencode }
     end
   end
   
@@ -41,15 +45,14 @@ class TorrentsController < ApplicationController
   end
   
   def announce
-    @torrent = Torrent.find_by_infohash params[:info_hash]
-    render :text => { "failure reason" => "Torrent ekki á skrá" }.bencode and return if @torrent.nil?
+    key = process_passkey
     
-    @peer = Peer.find_or_initialize_by_torrent_id_and_peer_id(@torrent.id, params[:peer_id])
+    @peer = Peer.find_or_initialize_by_torrent_id_and_peer_id key.torrent.id, params[:peer_id]
     @peer.destroy and render :text => { }.bencode and return if params[:event] == "stopped"
     
-    @peer.update_attributes(params)
+    @peer.update_attributes params
     @peer.ip = request.ip if params[:ip].nil?
-    @peer.user_id = 1
+    @peer.user = key.user
     
     if @peer.save
       render :text => {
@@ -57,36 +60,56 @@ class TorrentsController < ApplicationController
         "min interval" => 2.seconds.to_i,
         "complete" => 0, # todo
         "incomplete" => 0, # todo
-        "peers" => @torrent.peers.map{|v| {
+        "peers" => key.torrent.peers.map{|v| {
           "peer id" => v.peer_id,
           "ip" => v.ip,
           "port" => v.port
         } }
       }.bencode
     else
-      render :text => { "failure reason" => "Invalid parameters" }.bencode
+      raise TrackerError, "invalid parameters"
     end
+  rescue TrackerError => e
+    render :text => { "failure reason" => e.to_s }.bencode
   end
   
   def scrape
-    render :text => { }.bencode and return if params[:info_hash].nil?
-    
-    @torrent = Torrent.find_by_infohash params[:info_hash]
-    render :text => { "failure reason" => "Torrent ekki á skrá" }.bencode and return if @torrent.nil?
+    key = parse_passkey
     
     render :text => {
       "files" => {
-        @torrent.infohash => {
-          "complete" => @torrent.peers.seeders.count,
+        key.torrent.infohash => {
+          "complete" => key.torrent.peers.seeders.count,
           "downloaded" => 0, #todo
-          "incomplete" => @torrent.peers.leechers.count,
-          "name" => @torrent.info_name
-          
+          "incomplete" => key.torrent.peers.leechers.count,
+          "name" => key.torrent.info_name
         }
       },
       "flags" => {
         "min_request_interval" => 5.minutes.to_i
       }
     }.bencode
+  rescue TrackerError => e
+    render :text => { "failure reason" => e.to_s }.bencode
+  end
+  
+  private
+  
+  def process_passkey
+    raise TrackerError, "invalid parameters" if params[:passkey].nil? or params[:info_hash].nil?
+    
+    key = BEncode.load(Base64::urlsafe_decode64 params[:passkey]) rescue raise(TrackerError, "passkey rejected")
+    raise TrackerError, "passkey rejected" if key["user"].nil? or key["torrent"].nil?
+    
+    user = User.find_by_username! key["user"] rescue raise(TrackerError, "user not found")
+    torrent_id = Encryptor.decrypt key["torrent"], :key => user.key rescue raise(TrackerError, "passkey rejected")
+    torrent = Torrent.find torrent_id rescue raise(TrackerError, "torrent not found")
+    
+    raise TrackerError, "torrent not found" if torrent.infohash.bytes.to_a != params[:info_hash].bytes.to_a
+    
+    struct = Struct.new(:torrent, :user).new
+    struct.user = user
+    struct.torrent = torrent
+    struct
   end
 end

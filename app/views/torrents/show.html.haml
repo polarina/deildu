@@ -33,4 +33,15 @@
       %dd= link_to @torrent.user.username, @torrent.user
 
 .section
+  %ul.controls
+    %li= link_to "Nýtt", new_torrent_comment_path(@torrent)
   %h2 Athugasemdir
+  
+  - @comments.each do |comment|
+    .message
+      %ul.head
+        %li= link_to comment.user.username, comment.user
+        %li= comment.created_at
+      .avatar= image_tag(comment.user.gravatar_url, :alt => "")
+      .content.markdown!= markdown(comment.comment)
+      .clear

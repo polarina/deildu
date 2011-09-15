@@ -30,7 +30,7 @@ class Torrent < ActiveRecord::Base
     self.infohash.unpack('H*')[0]
   end
   
-  def torrent_file
+  def torrent_file(user)
     if self.fyles.blank?
       info = { "length" => self.size }
     else
@@ -42,8 +42,10 @@ class Torrent < ActiveRecord::Base
       }
     end
     
+    key = {:torrent => Encryptor.encrypt(self.id.to_s, :key => user.key), :user => user.username}.bencode
+    
     {
-      :announce => Rails.application.routes.url_helpers.announce_url(:host => "ror.system.is"),
+      :announce => Rails.application.routes.url_helpers.announce_url(:host => "ror.system.is", :passkey => Base64::urlsafe_encode64(key)),
       :info => {
         "name" => self.info_name,
         "piece length" => self.info_piece_length,
@@ -79,7 +81,7 @@ class Torrent < ActiveRecord::Base
     torrent.info_piece_length = hash["info"]["piece length"]
     torrent.info_pieces = hash["info"]["pieces"]
     torrent.fyles_attributes = files
-    torrent.infohash = Digest::SHA1.digest(torrent.torrent_file[:info].bencode)
+    torrent.infohash = Digest::SHA1.digest(torrent.torrent_file(User.new)[:info].bencode)
     
     torrent
   end

@@ -1,5 +1,6 @@
 class Peer < ActiveRecord::Base
   belongs_to :torrent
+  belongs_to :user
   
   scope :seeders, where{left == 0}
   scope :leechers, where{left != 0}
@@ -11,8 +12,11 @@ class Peer < ActiveRecord::Base
                   :downloaded,
                   :left
   
-  #validates :peer_id,
-  #  :length => { :is => 20 }
+  validate do |model|
+    model.errors.add :peer_id, "is invalid" if
+      model.peer_id.nil? or
+      model.peer_id.bytesize != 20
+  end
   
   validates :ip,
     :format => { :with => /^([0-9]{1,3}).([0-9]{1,3}).([0-9]{1,3}).([0-9]{1,3})$/ }

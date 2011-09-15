@@ -1,5 +1,8 @@
 class User < ActiveRecord::Base
+  include Gravtastic
+  
   has_secure_password
+  gravtastic :size => 150, :rating => "X"
   
   has_many :invitations
   has_many :invitees, :class_name => "User", :foreign_key => "inviter_id"

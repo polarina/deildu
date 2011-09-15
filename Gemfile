@@ -13,6 +13,7 @@ gem 'bencode'
 gem 'squeel'
 gem 'encryptor'
 gem 'redcarpet'
+gem 'gravtastic'
 
 # Gems used only for assets and not required
 # in production environments by default.
