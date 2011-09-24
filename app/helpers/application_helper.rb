@@ -6,6 +6,27 @@ module ApplicationHelper
     find_and_preserve(Redcarpet.new(text, *options).to_html)
   end
   
+  def message(options, &block)
+    user = options[:user]
+    created_at = options[:created_at]
+    content = options[:content]
+    
+    haml_tag :div, :class => :message do
+      haml_tag :div, :class => :head do
+        haml_tag :ul, :class => :controls do yield end if block
+        
+        haml_tag :ul do
+          haml_tag :li, link_to(user.username, user)
+          haml_tag :li, created_at
+        end
+      end
+      
+      haml_tag :div, image_tag(user.gravatar_url, :alt => ""), :class => :avatar
+      haml_tag :div, markdown(content), :class => [:content, :markdown]
+      haml_tag :div, :class => :clear
+    end
+  end
+  
   def torrent_overview(torrent, options = { })
     c = 0
     

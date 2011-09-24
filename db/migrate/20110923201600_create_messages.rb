@@ -2,6 +2,7 @@ class CreateMessages < ActiveRecord::Migration
   def change
     create_table :messages do |t|
       t.timestamps :null => false
+      t.integer :parent_id
       t.integer :sender_id, :null => false
       t.integer :receiver_id, :null => false
       t.boolean :sender_deleted, :null => false

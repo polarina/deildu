@@ -38,14 +38,6 @@
   %h2 Athugasemdir
   
   - @comments.each do |comment|
-    .message
-      .head
-        %ul.controls
-          %li= link_to "Breyta", edit_torrent_comment_path(@torrent, comment)
-          %li= link_to "Eyða", torrent_comment_path(@torrent, comment), :method => :delete, :confirm => "Ertu viss um að þú viljir eyða þessari athugasemd?"
-        %ul
-          %li= link_to comment.user.username, comment.user
-          %li= comment.created_at
-      .avatar= image_tag(comment.user.gravatar_url, :alt => "")
-      .content.markdown!= markdown(comment.comment)
-      .clear
+    - message :user => comment.user, :created_at => comment.created_at, :content => comment.comment do
+      %li= link_to "Breyta", edit_torrent_comment_path(@torrent, comment)
+      %li= link_to "Eyða", torrent_comment_path(@torrent, comment), :method => :delete, :confirm => "Ertu viss um að þú viljir eyða þessari athugasemd?"

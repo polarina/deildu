@@ -42,7 +42,11 @@ class Torrent < ActiveRecord::Base
       }
     end
     
-    key = {:torrent => Encryptor.encrypt(self.id.to_s, :key => user.key), :user => user.username}.bencode
+    if self.id.nil?
+      key = "a"
+    else
+      key = {:torrent => Encryptor.encrypt(self.id.to_s, :key => user.key), :user => user.username}.bencode
+    end
     
     {
       :announce => Rails.application.routes.url_helpers.announce_url(:host => "ror.system.is", :passkey => Base64::urlsafe_encode64(key)),

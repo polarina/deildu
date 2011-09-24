@@ -52,6 +52,7 @@ ActiveRecord::Schema.define(:version => 20110923201600) do
   create_table "messages", :force => true do |t|
     t.datetime "created_at",       :null => false
     t.datetime "updated_at",       :null => false
+    t.integer  "parent_id"
     t.integer  "sender_id",        :null => false
     t.integer  "receiver_id",      :null => false
     t.boolean  "sender_deleted",   :null => false

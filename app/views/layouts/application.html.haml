@@ -25,17 +25,22 @@
           %li= link_to "Reglur", "/rules"
     - unless current_user.nil?
       #status
-        %ul.right
-          %li= link_to "Útskrá", auth_users_path, :method => :delete
-        %ul
-          %li
-            Velkomin/n,
-            = link_to current_user.username, current_user
-          %li= link_to "Boðslyklar", user_invitations_path(current_user)
-        %ul
-          %li Hlutfall: #{number_with_precision current_user.ratio}
-          %li Deilt: #{number_to_human_size current_user.uploaded}
-          %li Sótt: #{number_to_human_size current_user.downloaded}
+        .right
+          %ul
+            %li= link_to "Útskrá", auth_users_path, :method => :delete
+          %ul
+            %li= link_to "Innhólf", inbox_messages_path
+            %li= link_to "Úthólf", outbox_messages_path
+        .left
+          %ul
+            %li
+              Velkomin/n,
+              = link_to current_user.username, current_user
+            %li= link_to "Boðslyklar", invitations_path
+          %ul
+            %li Hlutfall: #{number_with_precision current_user.ratio}
+            %li Deilt: #{number_to_human_size current_user.uploaded}
+            %li Sótt: #{number_to_human_size current_user.downloaded}
     #content
       = yield
     #notice

@@ -1,4 +1,7 @@
 .section
   %h2= @message.subject
   
-  .markdown!= markdown @message.message
+  - message :user => @message.sender, :created_at => @message.created_at, :content => @message.message
+  
+  - if @message.parent
+    - message :user => @message.parent.sender, :created_at => @message.parent.created_at, :content => @message.parent.message
