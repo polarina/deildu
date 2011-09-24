@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110911183100) do
+ActiveRecord::Schema.define(:version => 20110923201600) do
 
   create_table "categories", :force => true do |t|
     t.string "title", :null => false
@@ -48,6 +48,20 @@ ActiveRecord::Schema.define(:version => 20110911183100) do
 
   add_index "invitations", ["key"], :name => "index_invitations_on_key", :unique => true
   add_index "invitations", ["user_id", "email"], :name => "index_invitations_on_user_id_and_email", :unique => true
+
+  create_table "messages", :force => true do |t|
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+    t.integer  "sender_id",        :null => false
+    t.integer  "receiver_id",      :null => false
+    t.boolean  "sender_deleted",   :null => false
+    t.boolean  "receiver_deleted", :null => false
+    t.string   "subject",          :null => false
+    t.text     "message",          :null => false
+  end
+
+  add_index "messages", ["receiver_id", "receiver_deleted", "created_at"], :name => "index_receiver"
+  add_index "messages", ["sender_id", "sender_deleted", "created_at"], :name => "index_sender"
 
   create_table "news", :force => true do |t|
     t.datetime "created_at", :null => false

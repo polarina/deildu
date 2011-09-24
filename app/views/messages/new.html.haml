@@ -1,0 +1,20 @@
+.section
+  %h2 Ný skilaboð
+  
+  = form_for @message do |f|
+    = f.error_messages
+    
+    %div
+      = f.label :receiver, "Viðtakandi"
+      = f.text_field :receiver
+    
+    %div
+      = f.label :subject, "Efni"
+      = f.text_field :subject
+    
+    %div
+      = f.label :message, "Skilaboð"
+      = f.text_area :message, :size => "10x12"
+    
+    %div
+      = f.submit "Senda"

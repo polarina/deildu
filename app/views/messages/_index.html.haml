@@ -1,0 +1,29 @@
+.section
+  %ul.controls
+    %li= link_to "Ný skilaboð", new_message_path
+  %h2= locals[:title]
+  
+  %table
+    %thead
+      %tr
+        - if locals[:type] == :i
+          %th Frá
+        - else
+          %th Til
+        %th.expand Titill
+        - if locals[:type] == :i
+          %th Móttekið
+        - else
+          %th Sent
+    %tbody
+      - @messages.each do |message|
+        %tr
+          - if locals[:type] == :i
+            %td= link_to message.sender.username, user_path(message.sender)
+          - else
+            %td= link_to message.receiver.username, user_path(message.receiver)
+          %td= link_to message.subject, message_path(message)
+          %td.nowrap= message.created_at
+      - if @messages.empty?
+        %tr
+          %td.notice{:colspan => 3} Engin skilaboð.

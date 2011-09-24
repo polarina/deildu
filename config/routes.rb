@@ -3,6 +3,15 @@ Deildu::Application.routes.draw do
     resources :posts
   end
   
+  resources :invitations
+  
+  resources :messages do
+    collection do
+      get 'inbox'
+      get 'outbox'
+    end
+  end
+  
   resources :pages
   
   resources :torrents do
@@ -10,8 +19,6 @@ Deildu::Application.routes.draw do
   end
   
   resources :users do
-    resources :invitations
-    
     collection do
       get 'auth'
       post 'auth'

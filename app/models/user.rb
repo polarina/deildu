@@ -63,4 +63,12 @@ class User < ActiveRecord::Base
     user = self.id
     Torrent.overview.joins{peers}.where{(peers.left == 0) & (peers.user_id == user)}
   end
+  
+  def received_messages
+    Message.where(:receiver_id => self.id)
+  end
+  
+  def sent_messages
+    Message.where(:sender_id => self.id)
+  end
 end
