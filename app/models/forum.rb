@@ -1,5 +1,5 @@
 class Forum < ActiveRecord::Base
-  has_many :topics
+  has_many :topics, :dependent => :destroy
   
   attr_accessible :ordering,
                   :title,

@@ -3,10 +3,13 @@ class ForumsController < ApplicationController
   
   def create
     @forum = Forum.create params[:forum]
-    respond_with @forum
+    respond_with @forum, :location => forums_path
   end
   
   def destroy
+    @forum = Forum.find params[:id]
+    @forum.destroy
+    respond_with @forum
   end
   
   def index

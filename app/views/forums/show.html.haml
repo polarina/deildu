@@ -2,6 +2,7 @@
   %ul.controls
     %li= link_to "Nýr spjallþráður", new_forum_topic_path(@forum)
     %li= link_to "Breyta", edit_forum_path(@forum)
+    %li= link_to "Eyða", forum_path(@forum), :confirm => "Ertu viss um að þú viljir eyða þessum spjallflokki?", :method => :delete
   %h2= @forum.title
   
   %table
