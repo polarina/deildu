@@ -9,6 +9,13 @@ class TopicsController < ApplicationController
     respond_with @forum, @topic
   end
   
+  def destroy
+    @forum = Forum.find params[:forum_id]
+    @topic = @forum.topics.find params[:id]
+    @topic.destroy
+    respond_with @forum, @topic
+  end
+  
   def show
     @forum = Forum.find params[:forum_id]
     @topic = @forum.topics.find params[:id]

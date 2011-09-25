@@ -1,7 +1,7 @@
 class Topic < ActiveRecord::Base
   belongs_to :forum
   belongs_to :user
-  has_many :posts
+  has_many :posts, :dependent => :destroy
   
   attr_accessible :subject,
                   :post
