@@ -9,7 +9,15 @@ class CommentsController < ApplicationController
     @comment.torrent = @torrent
     @comment.save
     
-    respond_with @comment, :location => torrent_path(@torrent)
+    respond_with @torrent, @comment, :location => torrent_path(@torrent)
+  end
+  
+  def destroy
+    @torrent = Torrent.find params[:torrent_id]
+    @comment = @torrent.comments.find params[:id]
+    @comment.destroy
+    
+    respond_with @torrent, @comment, :location => torrent_path(@torrent)
   end
   
   def update
@@ -18,16 +26,18 @@ class CommentsController < ApplicationController
     @comment.update_attributes(params[:comment])
     @comment.save
     
-    respond_with @comment, :location => torrent_path(@torrent)
+    respond_with @torrent, @comment, :location => torrent_path(@torrent)
   end
   
   def edit
     @torrent = Torrent.find params[:torrent_id]
-    respond_with(@comment = @torrent.comments.find(params[:id]))
+    @comment = @torrent.comments.find(params[:id])
+    respond_with @torrent, @comment
   end
   
   def new
     @torrent = Torrent.find params[:torrent_id]
-    respond_with(@comment = @torrent.comments.new)
+    @comment = @torrent.comments.new
+    respond_with @torrent, @comment
   end
 end
