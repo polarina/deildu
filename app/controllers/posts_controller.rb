@@ -10,6 +10,14 @@ class PostsController < ApplicationController
     respond_with @forum, @topic, @post, :location => forum_topic_path(@forum, @topic)
   end
   
+  def destroy
+    @forum = Forum.find params[:forum_id]
+    @topic = @forum.topics.find params[:topic_id]
+    @post = @topic.posts.find params[:id]
+    @post.destroy
+    respond_with @forum, @topic, @post
+  end
+  
   def new
     @forum = Forum.find params[:forum_id]
     @topic = @forum.topics.find params[:topic_id]
