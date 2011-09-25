@@ -1,6 +1,8 @@
 Deildu::Application.routes.draw do
   resources :forums do
-    resources :posts
+    resources :topics, :path => "/", :constraints => { :id => /\d+/ }, :except => :index do
+      resources :posts, :path => "/", :constraints => { :id => /\d+/ }, :except => :index
+    end
   end
   
   resources :invitations

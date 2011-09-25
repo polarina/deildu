@@ -1,0 +1,18 @@
+.section
+  %h2
+    = link_to @forum.title, @forum
+    &gt; Nýr spjallþráður
+  
+  = form_for [@forum, @topic] do |f|
+    = f.error_messages
+    
+    %div
+      = f.label :subject, "Efni"
+      = f.text_field :subject
+    
+    %div
+      = f.label :post, "Innlegg"
+      = f.text_area :post, :size => "10x12"
+    
+    %div
+      = f.submit "Vista"

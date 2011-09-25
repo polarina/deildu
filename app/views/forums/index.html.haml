@@ -1,4 +1,6 @@
 .section
+  %ul.controls
+    %li= link_to "Nýr spjallflokkur", new_forum_path
   %h2 Spjallborð
   
   %table
@@ -10,6 +12,17 @@
         %th Póstar
         %th.nowrap Seinasta innlegg
     %tbody
-      %tr
-        %td.notice{:colspan => 5}
-          Engir spjallflokkar.
+      - @forums.each do |forum|
+        %tr
+          %td ?
+          %td
+            = link_to forum.title, forum
+            %br
+            = forum.description
+          %td ?
+          %td ?
+          %td ?
+      - if @forums.empty?
+        %tr
+          %td.notice{:colspan => 5}
+            Engir spjallflokkar.

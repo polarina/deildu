@@ -1,0 +1,14 @@
+.section
+  %ul.controls
+    %li= link_to "Svara", new_forum_topic_post_path(@forum, @topic)
+    %li= link_to "Eyða", forum_topic_path(@forum, @topic), :confirm => "Ertu viss um að þú viljir eyða þessum spjallþræði?", :method => :delete
+  %h2
+    = link_to @forum.title, @forum
+    &gt;
+    = @topic.subject
+  
+  - message :user => @topic.user, :created_at => @topic.created_at, :content => @topic.post
+  
+  - @topic.posts.each do |post|
+    - message :user => post.user, :created_at => post.created_at, :content => post.post do
+      %li= link_to "Eyða", forum_topic_post_path(@forum, @topic, post), :confirm => "Ertu viss um að þú viljir eyða þessu innleggi?", :method => :delete

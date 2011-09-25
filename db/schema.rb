@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110923201600) do
+ActiveRecord::Schema.define(:version => 20110924212800) do
 
   create_table "categories", :force => true do |t|
     t.string "title", :null => false
@@ -27,6 +27,16 @@ ActiveRecord::Schema.define(:version => 20110923201600) do
 
   add_index "comments", ["torrent_id", "created_at"], :name => "index_comments_on_torrent_id_and_created_at"
   add_index "comments", ["user_id"], :name => "index_comments_on_user_id"
+
+  create_table "forums", :force => true do |t|
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+    t.integer  "ordering",    :null => false
+    t.string   "title",       :null => false
+    t.string   "description", :null => false
+  end
+
+  add_index "forums", ["ordering"], :name => "index_forums_on_ordering", :unique => true
 
   create_table "fyles", :force => true do |t|
     t.integer "torrent_id",                                :null => false
@@ -97,6 +107,28 @@ ActiveRecord::Schema.define(:version => 20110923201600) do
 
   add_index "peers", ["torrent_id", "peer_id"], :name => "index_peers_on_torrent_id_and_peer_id", :unique => true
   add_index "peers", ["user_id"], :name => "index_peers_on_user_id"
+
+  create_table "posts", :force => true do |t|
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.integer  "topic_id",   :null => false
+    t.integer  "user_id",    :null => false
+    t.text     "post",       :null => false
+  end
+
+  add_index "posts", ["topic_id", "created_at"], :name => "index_posts_on_topic_id_and_created_at"
+  add_index "posts", ["user_id", "created_at"], :name => "index_posts_on_user_id_and_created_at"
+
+  create_table "topics", :force => true do |t|
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.integer  "forum_id",   :null => false
+    t.integer  "user_id",    :null => false
+    t.string   "subject",    :null => false
+    t.text     "post",       :null => false
+  end
+
+  add_index "topics", ["forum_id"], :name => "index_topics_on_forum_id"
 
   create_table "torrents", :force => true do |t|
     t.datetime "created_at",                                       :null => false

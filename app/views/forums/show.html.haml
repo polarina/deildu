@@ -1,0 +1,24 @@
+.section
+  %ul.controls
+    %li= link_to "Nýr spjallþráður", new_forum_topic_path(@forum)
+    %li= link_to "Breyta", edit_forum_path(@forum)
+  %h2= @forum.title
+  
+  %table
+    %thead
+      %th Lesið
+      %th.expand Spjallþráður
+      %th Póstar
+      %th Höfundur
+      %th.nowrap Síðasta innleg
+    %tbody
+      - @topics.each do |topic|
+        %tr
+          %td ?
+          %td= link_to topic.subject, forum_topic_path(@forum, topic)
+          %td ?
+          %td= link_to topic.user.username, topic.user
+          %td ?
+      - if @topics.empty?
+        %tr
+          %td.notice{:colspan => 5} Engir spjallþræðir.

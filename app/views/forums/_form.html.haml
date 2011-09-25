@@ -1,0 +1,23 @@
+.section
+  - if @forum.new_record?
+    %h2 Nýr spjallflokkur
+  - else
+    %h2 Breyta spjallflokk
+  
+  = form_for @forum do |f|
+    = f.error_messages
+    
+    %div
+      = f.label :title, "Titill"
+      = f.text_field :title
+    
+    %div
+      = f.label :description, "Lýsing"
+      = f.text_field :description
+    
+    %div
+      = f.label :ordering, "Röðun"
+      = f.text_field :ordering
+    
+    %div
+      = f.submit "Vista"

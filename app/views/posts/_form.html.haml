@@ -1,0 +1,17 @@
+.section
+  %h2
+    = link_to @forum.title, @forum
+    &gt;
+    = link_to @topic.subject, forum_topic_path(@forum, @topic)
+    &gt;
+    Nýtt innlegg
+  
+  = form_for [@forum, @topic, @post] do |f|
+    = f.error_messages
+    
+    %div
+      = f.label :post, "Innlegg"
+      = f.text_area :post, :size => "10x12"
+    
+    %div
+      = f.submit "Vista"
