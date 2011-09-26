@@ -1,12 +1,18 @@
 .section
-  %h2 Ný skilaboð
+  - if @reply
+    %h2 Svara skilaboði
+  - else
+    %h2 Ný skilaboð
   
   = form_for @message do |f|
     = f.error_messages
     
-    %div
-      = f.label :receiver, "Viðtakandi"
-      = f.text_field :receiver
+    = hidden_field_tag :reply, @reply.id if @reply
+    
+    - unless @reply
+      %div
+        = f.label :receiver, "Viðtakandi"
+        = f.text_field :receiver
     
     %div
       = f.label :subject, "Efni"
@@ -18,3 +24,7 @@
     
     %div
       = f.submit "Senda"
+  
+  - if @reply
+    .section
+      - message :user => @reply.sender, :created_at => @reply.created_at, :content => @reply.message

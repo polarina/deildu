@@ -1,4 +1,6 @@
 .section
+  %ul.controls
+    %li= link_to "Svara", new_message_path(:reply => @message.id)
   %h2= @message.subject
   
   - message :user => @message.sender, :created_at => @message.created_at, :content => @message.message

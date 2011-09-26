@@ -4,9 +4,16 @@ class MessagesController < ApplicationController
   def create
     @message = Message.new params[:message]
     @message.sender = current_user
-    @message.receiver = User.find_by_username params[:message][:receiver]
     @message.sender_deleted = false
     @message.receiver_deleted = false
+    
+    if params[:reply]
+      @message.parent = Message.find params[:reply]
+      @message.receiver = @message.parent.sender
+    else
+      @message.receiver = User.find_by_username params[:message][:receiver]
+    end
+    
     @message.save
     
     respond_with @message
@@ -22,6 +29,11 @@ class MessagesController < ApplicationController
   
   def new
     @message = Message.new
+    @reply = Message.find params[:reply] if params[:reply]
+    
+    if @reply
+      @message.subject = "Re: " + @reply.subject
+    end
   end
   
   def show
