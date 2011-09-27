@@ -13,7 +13,7 @@ class ForumsController < ApplicationController
   end
   
   def index
-    respond_with(@forums = Forum.order("ordering asc").all)
+    respond_with(@forums = Forum.overview)
   end
   
   def edit

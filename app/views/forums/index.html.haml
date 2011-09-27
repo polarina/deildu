@@ -19,9 +19,14 @@
             = link_to forum.title, forum
             %br
             = forum.description
-          %td ?
-          %td ?
-          %td ?
+          %td= forum.topics_count
+          %td= forum.posts_count
+          %td.nowrap
+            = link_to forum.last_subject, forum_topic_path(forum, forum.last_topic_id)
+            af
+            = link_to User.find(forum.last_user_id).username, User.find(forum.last_user_id)
+            %br
+            = forum.last_created_at.to_time
       - if @forums.empty?
         %tr
           %td.notice{:colspan => 5}
