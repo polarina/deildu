@@ -22,18 +22,13 @@ class Forum < ActiveRecord::Base
     base = Post.where{topics.id == posts.topic_id}.order{created_at.desc}.limit(1)
     baset = Topic.where{forums.id == topics.forum_id}
     
-    lui = baset.select{[id.as(ida), "(#{base.select{user_id}.to_sql}) AS user_id"]}
-    lca = baset.select{[id.as(idb), "(#{base.select{created_at}.to_sql}) AS created_at"]}
-    ltn = baset.select{[id.as(idc), subject.as(subject)]}
+    lui = baset.select{[
+      id.as(topic_id),
+      subject.as(subject),
+      "(#{base.joins{user}.select{user.username}.to_sql}) AS username",
+      "(#{base.select{created_at}.to_sql}) AS created_at"
+    ]}.order("created_at DESC NULLS LAST").limit(1)
     
-    def self.new_aggreg(lui, lca, ltn, offset)
-      "SELECT t#{offset}.ida AS topic_id, t#{offset}.user_id AS user_id, t#{offset+1}.created_at AS created_at, t#{offset+2}.subject AS subject FROM (#{lui.to_sql}) AS t#{offset} INNER JOIN (#{lca.to_sql}) AS t#{offset+1} ON t#{offset}.ida = t#{offset+1}.idb INNER JOIN (#{ltn.to_sql}) AS t#{offset+2} ON t#{offset}.ida = t#{offset+2}.idc ORDER BY created_at DESC NULLS LAST LIMIT 1"
-    end
-    
-    a = "(SELECT topic_id FROM (#{new_aggreg(lui, lca, ltn, 3)} ) AS a) AS last_topic_id"
-    b = "(SELECT user_id FROM (#{new_aggreg(lui, lca, ltn, 5)}) AS a) AS last_user_id"
-    c = "(SELECT created_at FROM (#{new_aggreg(lui, lca, ltn, 7)}) AS a) AS last_created_at"
-    d = "(SELECT subject FROM (#{new_aggreg(lui, lca, ltn, 9)}) AS a) AS last_subject"
     Forum
       .joins("INNER JOIN (#{agr_topics.to_sql}) AS t1 ON t1.id = forums.id")
       .joins("INNER JOIN (#{agr_posts.to_sql}) AS t2 ON t2.id = forums.id")
@@ -43,10 +38,10 @@ class Forum < ActiveRecord::Base
         description,
         t1.count.as(topics_count),
         t2.count.as(posts_count),
-        a,
-        b,
-        c,
-        d
+        "(SELECT topic_id FROM (#{lui.to_sql} ) AS a) AS last_topic_id",
+        "(SELECT username FROM (#{lui.to_sql}) AS a) AS last_username",
+        "(SELECT created_at FROM (#{lui.to_sql}) AS a) AS last_created_at",
+        "(SELECT subject FROM (#{lui.to_sql}) AS a) AS last_subject"
       ]}
   end
 end

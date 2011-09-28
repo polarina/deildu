@@ -24,7 +24,7 @@
           %td.nowrap
             = link_to forum.last_subject, forum_topic_path(forum, forum.last_topic_id)
             af
-            = link_to User.find(forum.last_user_id).username, User.find(forum.last_user_id)
+            = link_to forum.last_username, forum.last_username
             %br
             = forum.last_created_at.to_time
       - if @forums.empty?
