@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110924212800) do
+ActiveRecord::Schema.define(:version => 20110927232800) do
 
   create_table "categories", :force => true do |t|
     t.string "title", :null => false
@@ -82,6 +82,17 @@ ActiveRecord::Schema.define(:version => 20110924212800) do
     t.text     "news",       :null => false
   end
 
+  create_table "notes", :force => true do |t|
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.integer  "report_id",  :null => false
+    t.integer  "user_id",    :null => false
+    t.text     "note",       :null => false
+  end
+
+  add_index "notes", ["report_id"], :name => "index_notes_on_report_id"
+  add_index "notes", ["user_id"], :name => "index_notes_on_user_id"
+
   create_table "pages", :force => true do |t|
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
@@ -118,6 +129,22 @@ ActiveRecord::Schema.define(:version => 20110924212800) do
 
   add_index "posts", ["topic_id", "created_at"], :name => "index_posts_on_topic_id_and_created_at"
   add_index "posts", ["user_id", "created_at"], :name => "index_posts_on_user_id_and_created_at"
+
+  create_table "reports", :force => true do |t|
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.integer  "user_id",    :null => false
+    t.integer  "status_id",  :null => false
+    t.string   "uri",        :null => false
+    t.text     "reason",     :null => false
+  end
+
+  add_index "reports", ["status_id"], :name => "index_reports_on_status_id"
+  add_index "reports", ["user_id"], :name => "index_reports_on_user_id"
+
+  create_table "statuses", :force => true do |t|
+    t.string "status", :null => false
+  end
 
   create_table "topics", :force => true do |t|
     t.datetime "created_at", :null => false
