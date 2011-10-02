@@ -41,7 +41,7 @@ class Peer < ActiveRecord::Base
       uploaded = self.uploaded - self.uploaded_was
       
       unless downloaded == 0 and uploaded == 0
-        User.update_counters self.user_id, :downloaded => downloaded, :uploaded => uploaded
+        User.update_counters self.user_id, :kredits => uploaded - downloaded
       end
     end
   end

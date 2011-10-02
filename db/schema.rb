@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110927232800) do
+ActiveRecord::Schema.define(:version => 20111002185700) do
 
   create_table "categories", :force => true do |t|
     t.string "title", :null => false
@@ -183,10 +183,9 @@ ActiveRecord::Schema.define(:version => 20110927232800) do
     t.string   "username",                                                                     :null => false
     t.string   "password_digest",                                                              :null => false
     t.string   "email",           :limit => 320,                                               :null => false
-    t.decimal  "downloaded",                     :precision => 45, :scale => 0, :default => 0, :null => false
-    t.decimal  "uploaded",                       :precision => 45, :scale => 0, :default => 0, :null => false
     t.integer  "inviter_id"
     t.string   "key",                                                                          :null => false
+    t.decimal  "kredits",                        :precision => 45, :scale => 0, :default => 0, :null => false
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

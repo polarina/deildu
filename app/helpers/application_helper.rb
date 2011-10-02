@@ -6,6 +6,14 @@ module ApplicationHelper
     find_and_preserve(Redcarpet.new(text, *options).to_html)
   end
   
+  def pretty_kredits(kredits)
+    if kredits < 0
+      "-" + number_to_human_size(kredits.abs)
+    else
+      number_to_human_size(kredits)
+    end
+  end
+  
   def message(options, &block)
     user = options[:user]
     created_at = options[:created_at]

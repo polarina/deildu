@@ -4,12 +4,8 @@
   %dl
     %dt Skráð
     %dd= @user.created_at
-    %dt Upphalað
-    %dd= number_to_human_size(@user.uploaded)
-    %dt Niðurhalað
-    %dd= number_to_human_size(@user.downloaded)
-    %dt Hlutfall
-    %dd= number_with_precision @user.ratio
+    %dt Kredits
+    %dd= pretty_kredits @user.kredits
     %dt Innsend torrent
     %dd
       - torrent_overview @user.uploaded_overview, :download => false, :user => false, :empty_message => "Engin innsend torrent."

@@ -40,9 +40,7 @@
               = link_to current_user.username, current_user
             %li= link_to "Boðslyklar", invitations_path
           %ul
-            %li Hlutfall: #{number_with_precision current_user.ratio}
-            %li Deilt: #{number_to_human_size current_user.uploaded}
-            %li Sótt: #{number_to_human_size current_user.downloaded}
+            %li Kredits: #{pretty_kredits current_user.kredits}
     #content
       = yield
     #notice

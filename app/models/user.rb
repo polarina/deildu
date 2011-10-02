@@ -43,10 +43,6 @@ class User < ActiveRecord::Base
     self.username
   end
   
-  def ratio
-    self.uploaded.to_f / self.downloaded.to_f
-  end
-  
   def update_passkey
     self.key = SecureRandom::urlsafe_base64(16)
   end
