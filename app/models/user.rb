@@ -9,6 +9,7 @@ class User < ActiveRecord::Base
   belongs_to :inviter, :class_name => "User"
   
   has_many :bans
+  has_many :blocks
   has_many :reports
   
   attr_accessible :username,

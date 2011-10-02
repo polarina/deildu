@@ -1,4 +1,6 @@
 .section
+  %ul.controls
+    %li= link_to "Hunsa", blocks_path(:user => @user.username), :confirm => "Ertu viss um að þú viljir hunsa þennan notanda?", :method => :post
   %h2= @user.username
   
   %dl

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111002211900) do
+ActiveRecord::Schema.define(:version => 20111002230900) do
 
   create_table "bans", :force => true do |t|
     t.datetime "created_at",                :null => false
@@ -21,6 +21,15 @@ ActiveRecord::Schema.define(:version => 20111002211900) do
   end
 
   add_index "bans", ["address"], :name => "index_bans_on_address", :unique => true
+
+  create_table "blocks", :force => true do |t|
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.integer  "user_id",    :null => false
+    t.integer  "blocked_id", :null => false
+  end
+
+  add_index "blocks", ["user_id", "blocked_id"], :name => "index_blocks_on_user_id_and_blocked_id", :unique => true
 
   create_table "categories", :force => true do |t|
     t.string "title", :null => false

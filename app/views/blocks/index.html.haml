@@ -1,0 +1,19 @@
+.section
+  %h2 Hunsaðir notendur
+  
+  %table
+    %thead
+      %tr
+        %th Skráð
+        %th.expand Notandi
+        %th Eyða
+    %tbody
+      - @blocks.each do |block|
+        %tr
+          %td.nowrap= block.created_at
+          %td= link_to block.blocked.username, block.blocked
+          %td= link_to "Eyða", block, :method => :delete
+      - if @blocks.empty?
+        %tr
+          %td.notice{:colspan => 3}
+            Engir hunsaðir notendur.
