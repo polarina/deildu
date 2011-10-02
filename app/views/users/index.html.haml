@@ -1,0 +1,19 @@
+.section
+  %h2 Notendalisti
+  
+  %table
+    %thead
+      %tr
+        %th Skráð
+        %th.expand Notandanafn
+        %th Kredits
+    %tbody
+      - @users.each do |user|
+        %tr
+          %td.nowrap= user.created_at
+          %td= link_to user.username, user
+          %td.nowrap= pretty_kredits user.kredits
+      - if @users.empty?
+        %tr
+          %td.notice{:colspan => 2}
+            Engir notendur.

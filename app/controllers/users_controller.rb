@@ -19,7 +19,7 @@ class UsersController < ApplicationController
   end
   
   def index
-    respond_with(@users = User.all)
+    respond_with(@users = User.order(:username))
   end
   
   def show
