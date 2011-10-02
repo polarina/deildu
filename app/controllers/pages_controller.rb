@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
-  skip_before_filter :requires_authorization, :only => :page
+  skip_before_filter :requires_authentication, :only => :page
   
   respond_to :html
   

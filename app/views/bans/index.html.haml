@@ -1,0 +1,21 @@
+.section
+  %ul.controls
+    %li= link_to "Nýtt bann", new_ban_path
+  %h2 Bönn
+  
+  %table
+    %thead
+      %tr
+        %th Skráð
+        %th.nowrap Skráð af
+        %th.expand Subnet
+    %tbody
+      - @bans.each do |ban|
+        %tr
+          %td.nowrap= ban.created_at
+          %td= ban.user.username
+          %td= link_to ban.address, ban
+      - if @bans.empty?
+        %tr
+          %td.notice{:colspan => 3}
+            Engin bönn.

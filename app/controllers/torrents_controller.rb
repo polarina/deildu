@@ -4,7 +4,7 @@ class TrackerError < StandardError
 end
 
 class TorrentsController < ApplicationController
-  skip_before_filter :requires_authorization, :only => [:announce, :scrape]
+  skip_before_filter :requires_authentication, :only => [:announce, :scrape]
   respond_to :html
   
   def create
@@ -28,7 +28,7 @@ class TorrentsController < ApplicationController
   
   def show
     @torrent = Torrent.find(params[:id])
-    @comments = Comment.includes(:user).find_all_by_torrent_id(@torrent.id)
+    @comments = Comment.includes(:user).order("created_at desc").find_all_by_torrent_id(@torrent.id)
     
     respond_to do |format|
       format.html
@@ -74,7 +74,7 @@ class TorrentsController < ApplicationController
   end
   
   def scrape
-    key = parse_passkey
+    key = process_passkey
     
     render :text => {
       "files" => {
@@ -102,6 +102,8 @@ class TorrentsController < ApplicationController
     raise TrackerError, "passkey rejected" if key["user"].nil? or key["torrent"].nil?
     
     user = User.find_by_username! key["user"] rescue raise(TrackerError, "user not found")
+    raise TrackerError, "user is forbidden" unless user.allowed
+    
     torrent_id = Encryptor.decrypt key["torrent"], :key => user.key rescue raise(TrackerError, "passkey rejected")
     torrent = Torrent.find torrent_id rescue raise(TrackerError, "torrent not found")
     

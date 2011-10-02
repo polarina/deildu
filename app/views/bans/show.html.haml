@@ -1,0 +1,15 @@
+.section
+  %ul.controls
+    %li= link_to "Breyta", edit_ban_path(@ban)
+    %li= link_to "Eyða", ban_path(@ban), :confirm => "Ertu viss um að þú viljir eyða þessu banni?", :method => :delete
+  %h2
+    = link_to "Bönn", bans_path
+    &gt;
+    = @ban.address
+  
+  %dl
+    %dt Skráð
+    %dd= @ban.created_at
+    
+    %dt Skráð af
+    %dd= link_to @ban.user.username, @ban.user

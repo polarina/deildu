@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  skip_before_filter :requires_authorization, :only => [:new, :create, :auth]
+  skip_before_filter :requires_authentication, :only => [:new, :create, :auth]
   
   respond_to :html
   

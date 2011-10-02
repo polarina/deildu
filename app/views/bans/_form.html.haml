@@ -1,0 +1,15 @@
+.section
+  - if @ban.new_record?
+    %h2 Nýtt bann
+  - else
+    %h2 Breyta banni
+  
+  = form_for @ban do |f|
+    = f.error_messages
+    
+    %div
+      = f.label :address, "Vistfang"
+      = f.text_field :address
+    
+    %div
+      = f.submit "Vista"

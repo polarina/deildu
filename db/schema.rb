@@ -11,7 +11,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111002185700) do
+ActiveRecord::Schema.define(:version => 20111002211900) do
+
+  create_table "bans", :force => true do |t|
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
+    t.integer  "user_id",                   :null => false
+    t.string   "address",    :limit => nil, :null => false
+  end
+
+  add_index "bans", ["address"], :name => "index_bans_on_address", :unique => true
 
   create_table "categories", :force => true do |t|
     t.string "title", :null => false
@@ -178,14 +187,15 @@ ActiveRecord::Schema.define(:version => 20111002185700) do
   add_index "torrents", ["user_id"], :name => "index_torrents_on_user_id"
 
   create_table "users", :force => true do |t|
-    t.datetime "created_at",                                                                   :null => false
-    t.datetime "updated_at",                                                                   :null => false
-    t.string   "username",                                                                     :null => false
-    t.string   "password_digest",                                                              :null => false
-    t.string   "email",           :limit => 320,                                               :null => false
+    t.datetime "created_at",                                                                      :null => false
+    t.datetime "updated_at",                                                                      :null => false
+    t.string   "username",                                                                        :null => false
+    t.string   "password_digest",                                                                 :null => false
+    t.string   "email",           :limit => 320,                                                  :null => false
     t.integer  "inviter_id"
-    t.string   "key",                                                                          :null => false
-    t.decimal  "kredits",                        :precision => 45, :scale => 0, :default => 0, :null => false
+    t.string   "key",                                                                             :null => false
+    t.decimal  "kredits",                        :precision => 45, :scale => 0, :default => 0,    :null => false
+    t.boolean  "allowed",                                                       :default => true, :null => false
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
