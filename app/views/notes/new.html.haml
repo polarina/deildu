@@ -1,0 +1,12 @@
+.section
+  %h2 Ný athugasemd á tilkynningu
+  
+  = form_for [@report, @note] do |f|
+    = f.error_messages
+    
+    %div
+      = f.label :note, "Til athugunar"
+      = f.text_area :note, :size => "10x12"
+    
+    %div
+      = f.submit "Vista"

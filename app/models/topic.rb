@@ -11,4 +11,8 @@ class Topic < ActiveRecord::Base
   
   validates :post,
     :presence => true
+  
+  def content
+    post
+  end
 end

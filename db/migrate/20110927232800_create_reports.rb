@@ -8,7 +8,8 @@ class CreateReports < ActiveRecord::Migration
       t.timestamps :null => false
       t.references :user, :null => false
       t.references :status, :null => false
-      t.string :uri, :null => false
+      t.string :victim_type, :null => false
+      t.integer :victim_id, :null => false
       t.text :reason, :null => false
     end
     

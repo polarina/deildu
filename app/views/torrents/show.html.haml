@@ -1,5 +1,6 @@
 .section
   %ul.controls
+    %li= link_to "Tilkynna", new_report_path(:torrent => @torrent.id)
     %li= link_to "Breyta", edit_torrent_path(@torrent)
     %li= link_to "Eyða", @torrent, :method => :delete, :confirm => "Ertu viss um að þú viljir eyða þessu torrenti?"
   %h2= @torrent.title
@@ -38,6 +39,7 @@
   %h2 Athugasemdir
   
   - @comments.each do |comment|
-    - message :user => comment.user, :created_at => comment.created_at, :content => comment.comment do
+    - message :user => comment.user, :created_at => comment.created_at, :content => comment do
+      %li= link_to "Tilkynna", new_report_path(:comment => comment.id)
       %li= link_to "Breyta", edit_torrent_comment_path(@torrent, comment)
       %li= link_to "Eyða", torrent_comment_path(@torrent, comment), :method => :delete, :confirm => "Ertu viss um að þú viljir eyða þessari athugasemd?"

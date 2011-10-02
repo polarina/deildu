@@ -1,0 +1,15 @@
+.section
+  %h2 Tilkynna notanda
+  
+  = form_for @report, :url => reports_path(:torrent => params[:torrent], :comment => params[:comment], :post => params[:post]) do |f|
+    = f.error_messages
+    
+    %div
+      = f.label :reason, "Ástæða"
+      = f.text_area :reason, :size => "10x12"
+    
+    %div
+      = f.submit "Skrá tilkynningu"
+
+.section
+  - render_victim @report.victim

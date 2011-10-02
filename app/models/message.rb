@@ -17,4 +17,8 @@ class Message < ActiveRecord::Base
   
   validates :message,
     :presence => true
+  
+  def content
+    message
+  end
 end

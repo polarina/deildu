@@ -1,0 +1,23 @@
+.section
+  %h2 Tilkynningar
+  
+  %table
+    %thead
+      %tr
+        %th Skráð
+        %th.nowrap Skráð af
+        %th.nowrap Tilkynnti
+        %th.expand Something
+        %th Staða
+    %tbody
+      - @reports.each do |report|
+        %tr
+          %td.nowrap= report.created_at
+          %td= link_to report.user.username, report.user
+          %td= link_to report.victim.user.username, report.victim.user
+          %td!= link_report report
+          %td= report.status.status
+      - if @reports.empty?
+        %tr
+          %td.notice{:colspan => 5}
+            Engar tilkynningar.

@@ -16,6 +16,10 @@ Deildu::Application.routes.draw do
   
   resources :pages
   
+  resources :reports do
+    resources :notes
+  end
+  
   resources :torrents do
     resources :comments
   end

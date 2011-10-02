@@ -131,12 +131,13 @@ ActiveRecord::Schema.define(:version => 20110927232800) do
   add_index "posts", ["user_id", "created_at"], :name => "index_posts_on_user_id_and_created_at"
 
   create_table "reports", :force => true do |t|
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-    t.integer  "user_id",    :null => false
-    t.integer  "status_id",  :null => false
-    t.string   "uri",        :null => false
-    t.text     "reason",     :null => false
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+    t.integer  "user_id",     :null => false
+    t.integer  "status_id",   :null => false
+    t.string   "victim_type", :null => false
+    t.integer  "victim_id",   :null => false
+    t.text     "reason",      :null => false
   end
 
   add_index "reports", ["status_id"], :name => "index_reports_on_status_id"

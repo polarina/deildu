@@ -8,6 +8,8 @@ class User < ActiveRecord::Base
   has_many :invitees, :class_name => "User", :foreign_key => "inviter_id"
   belongs_to :inviter, :class_name => "User"
   
+  has_many :reports
+  
   attr_accessible :username,
                   :password,
                   :password_confirmation,

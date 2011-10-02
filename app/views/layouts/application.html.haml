@@ -27,6 +27,8 @@
       #status
         .right
           %ul
+            %li= link_to "Tilkynningar", reports_path
+            %li= link_to "Síður", pages_path
             %li= link_to "Útskrá", auth_users_path, :method => :delete
           %ul
             %li= link_to "Innhólf", inbox_messages_path

@@ -6,4 +6,8 @@ class Post < ActiveRecord::Base
   
   validates :post,
     :length => { :within => 5..8192 }
+  
+  def content
+    post
+  end
 end

@@ -10,4 +10,8 @@ class Comment < ActiveRecord::Base
   
   validates :comment,
     :presence => true
+  
+  def content
+    comment
+  end
 end

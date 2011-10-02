@@ -12,6 +12,8 @@ module ApplicationHelper
     content = options[:content]
     
     haml_tag :div, :class => :message do
+      haml_tag :a, :name => content.class.to_s.downcase + content.id.to_s
+      
       haml_tag :div, :class => :head do
         haml_tag :ul, :class => :controls do yield end if block
         
@@ -22,7 +24,7 @@ module ApplicationHelper
       end
       
       haml_tag :div, image_tag(user.gravatar_url, :alt => ""), :class => :avatar
-      haml_tag :div, markdown(content), :class => [:content, :markdown]
+      haml_tag :div, markdown(content.content), :class => [:content, :markdown]
       haml_tag :div, :class => :clear
     end
   end
