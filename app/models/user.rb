@@ -31,12 +31,6 @@ class User < ActiveRecord::Base
     :length => { :within => 5..320 },
     :format => { :with => /^([\w\.%\+\-]+)@([\w\-]+\.)+([\w]{2,})$/i }
   
-  validates :downloaded,
-    :numericality => { :greater_than_or_equal_to => 0 }
-  
-  validates :uploaded,
-    :numericality => { :greater_than_or_equal_to => 0 }
-  
   before_create do
     self.update_passkey
   end

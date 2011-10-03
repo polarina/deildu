@@ -13,7 +13,7 @@
       - @bans.each do |ban|
         %tr
           %td.nowrap= ban.created_at
-          %td= ban.user.username
+          %td= link_to ban.user.username, ban.user
           %td= link_to ban.address, ban
       - if @bans.empty?
         %tr
