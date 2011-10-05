@@ -1,1 +1,10 @@
-.markdown!= markdown @page.entry
+.section
+  %ul.controls
+    %li= link_to "Breyta", edit_page_path(@page)
+    %li= link_to "Eyða", @page, :confirm => "Ertu viss um að þú viljir eyða þessari síðu?", :method => :delete
+  %h2
+    = @page.section
+    \/
+    = @page.uri
+  
+  .markdown!= markdown @page.entry

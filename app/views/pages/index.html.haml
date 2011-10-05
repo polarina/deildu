@@ -1,7 +1,6 @@
 .section
   %ul.controls
-    %li= link_to "Nýtt", new_page_path
-    %li= link_to "Annað", new_page_path
+    %li= link_to "Ný síða", new_page_path
   %h2 Síður
   
   %table
@@ -13,7 +12,7 @@
       - @pages.each do |page|
         %tr
           %td= page.section
-          %td= link_to page.uri, edit_page_path(page)
+          %td= link_to page.uri, page
           %td.nowrap= page.created_at
       - if @pages.empty?
         %tr

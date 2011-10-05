@@ -7,6 +7,12 @@ class PagesController < ApplicationController
     respond_with(@page = Page.create(params[:page]))
   end
   
+  def destroy
+    @page = Page.find(params[:id])
+    @page.destroy
+    respond_with @page
+  end
+  
   def index
     respond_with(@pages = Page.ordered.all)
   end
