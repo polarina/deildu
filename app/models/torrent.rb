@@ -30,6 +30,13 @@ class Torrent < ActiveRecord::Base
     self.infohash.unpack('H*')[0]
   end
   
+  def recalculate_infohash
+    user = User.new
+    user.username = "stargate"
+    user.key = "sg-1"
+    self.infohash = Digest::SHA1.digest(self.torrent_file(user)[:info].bencode)
+  end
+  
   def torrent_file(user)
     if self.fyles.blank?
       info = { "length" => self.size }
@@ -54,7 +61,8 @@ class Torrent < ActiveRecord::Base
         "name" => self.info_name,
         "piece length" => self.info_piece_length,
         "pieces" => self.info_pieces,
-        "private" => 1
+        "private" => 1,
+        "I'm sorry, Dave. I'm afraid I can't do that." => 1,
       }.merge(info)
     }
   end
