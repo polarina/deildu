@@ -39,6 +39,139 @@ class User < ActiveRecord::Base
     self.username
   end
   
+  def has_permission_to?(params)
+    controller, action = params[:controller], params[:action]
+    action = "create" if action == "new"
+    action = "update" if action == "edit"
+    
+    permissions = [
+      {
+        "blocks" => {
+          "create" => Proc.new { User.find_by_username!(params[:user]) != self },
+          "destroy" => true,
+          "index" => true,
+        },
+        "comments" => {
+          "create" => true,
+        },
+        "forums" => {
+          "index" => true,
+          "show" => true,
+        },
+        "front" => {
+          "index" => true,
+        },
+        "invitations" => {
+          "create" => true,
+          "index" => true,
+          "destroy" => true,
+        },
+        "messages" => {
+          "create" => Proc.new do
+            return true unless params[:reply]
+            
+            msg = Message.find params[:reply]
+            (not msg.sender_deleted and msg.sender_id == self.id) or (not msg.receiver_deleted and msg.receiver_id == self.id)
+          end,
+          "inbox" => true,
+          "outbox" => true,
+          "show" => Proc.new do
+            msg = Message.find params[:id]
+            (not msg.sender_deleted and msg.sender_id == self.id) or (not msg.receiver_deleted and msg.receiver_id == self.id)
+          end,
+        },
+        "pages" => {
+          "page" => true,
+        },
+        "posts" => {
+          "create" => true,
+          "destroy" => Proc.new { Post.find(params[:id]).user == self },
+        },
+        "reports" => {
+          "create" => true,
+        },
+        "topics" => {
+          "create" => true,
+          "destroy" => Proc.new { Topic.find(params[:id]).user == self },
+          "show" => true,
+        },
+        "torrents" => {
+          "create" => true,
+          "destroy" => Proc.new { Torrent.find(params[:id]).user == self },
+          "index" => true,
+          "show" => true,
+          "update" => Proc.new { Torrent.find(params[:id]).user == self },
+        },
+        "users" => {
+          "auth" => true,
+          "show" => true,
+        },
+      },
+      {
+        "users" => {
+          "index" => true,
+        },
+      },
+      {
+        "comments" => {
+          "destroy" => true,
+          "update" => true,
+        },
+        "forums" => {
+          "create" => true,
+          "destroy" => true,
+          "update" => true,
+        },
+        "notes" => {
+          "create" => true,
+        },
+        "pages" => {
+          "create" => true,
+          "destroy" => true,
+          "index" => true,
+          "show" => true,
+          "update" => true,
+        },
+        "posts" => {
+          "delete" => true,
+        },
+        "reports" => {
+          "index" => true,
+          "show" => true,
+        },
+        "topics" => {
+          "destroy" => true,
+        },
+        "torrents" => {
+          "destroy" => true,
+          "update" => true,
+        },
+        "users" => {
+          "update" => true,
+        },
+      },
+      {
+        "bans" => {
+          "create" => true,
+          "destroy" => true,
+          "index" => true,
+          "show" => true,
+          "update" => true,
+        },
+      }
+    ]
+    
+    permissions[0..permission_level].each do |v|
+      section = v[controller]
+      section = section[action] if section
+      section = section.call if section.class == Proc
+      
+      return true if section
+    end
+    
+    false
+  end
+  
   def update_passkey
     self.key = SecureRandom::urlsafe_base64(16)
   end

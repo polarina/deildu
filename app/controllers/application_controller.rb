@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
   before_filter :is_forbidden
   before_filter :requires_authentication
+  before_filter :requires_authorization
   
   private
 
@@ -27,6 +28,14 @@ class ApplicationController < ActionController::Base
       @return = request.url
       
       render 'users/auth', :status => :forbidden
+    end
+  end
+  
+  def requires_authorization
+    return unless current_user
+    
+    unless current_user.has_permission_to?(params)
+      render 'public/403', :layout => false, :status => :forbidden
     end
   end
 end
