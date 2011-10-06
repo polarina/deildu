@@ -1,0 +1,170 @@
+// Definition
+dl
+  width: 100%
+
+dt
+  float: left
+  text-align: right
+  width: 140px
+  padding: 4px
+  font-weight: bold
+
+dd
+  padding: 4px
+  margin-left: 148px
+
+// Form
+.errorExplanation
+  margin: 0 auto
+  margin-bottom: 1em
+  width: 90%
+  padding: 1em
+  border: 2px solid crimson
+  background-color: lightpink
+  line-height: 1.2
+  
+  h2
+    margin-bottom: 0.2em
+    font-size: 1.3em
+    font-weight: bold
+  
+  p
+    margin: 0.2em 0
+  
+  li
+    list-style-type: disc
+    margin-left: 2em
+
+.field_with_errors
+  input, textarea, select
+    border: 1px solid red
+
+form
+  > div
+    display: block
+    margin-bottom: 0.5em
+    clear: left
+    
+    p
+      margin-left: 148px
+      width: 75%
+  
+label
+  float: left
+  width: 140px
+  font-weight: bold
+  text-align: right
+  line-height: 16px
+  margin: 4px 0
+
+input, textarea, select
+  width: 75%
+  vertical-align: middle
+  margin: 0 8px
+  border: 1px solid dimgrey
+  font-size: 1.1em
+  box-sizing: border-box
+  -webkit-box-sizing: border-box
+  -moz-box-sizing: border-box
+  -ms-box-sizing: border-box
+
+input[type=submit]
+  clear: both
+  width: auto
+  margin-left: 148px
+
+// Tabular
+table
+  border: 1px solid gray
+  width: 100%
+  font-size: 12px
+
+thead
+  background-color: #242424
+  color: #cbcbcb
+
+th
+  text-align: left
+  width: 0
+  
+  &.expand
+    width: 100%
+
+td, th
+  vertical-align: middle
+  padding: 5px 10px
+  
+  &.nopad
+    padding: 0
+    font-size: 0
+  
+  &.nowrap
+    white-space: nowrap
+  
+  &.notice
+    text-align: center
+    font-size: 1.5em
+    color: dimgrey
+    height: 2em
+  
+  &.center
+    text-align: center
+
+// Helpers
+.clear
+  clear: both
+
+/// Sections //////////////////////////////////////////////////////////////////
+
+.section
+  margin-top: 1.2em
+  
+  &:first-child
+    margin: 0
+  
+  > .controls
+    float: right
+    
+    li
+      float: left
+      font-size: 1.3em
+      font-weight: bold
+      margin-left: 1.5em
+      list-style-type: disc
+      
+      &:first-child
+        list-style: none
+  
+  > h2
+    font-size: 1.3em
+    font-weight: bold
+    margin-bottom: 0.8em
+
+.message
+  .head
+    background-color: #242424
+    border: 1px solid grey
+    border-bottom: none
+    padding: 4px 10px
+    
+    .controls
+      float: right
+    
+    li
+      color: white
+      display: inline
+      padding: 0 10px
+      
+      a
+        color: inherit
+        font-weight: bold
+  
+  .avatar
+    width: 150px
+    float: left
+    font-size: 0
+  
+  .content
+    padding: 8px
+    float: right
+    width: 764px

@@ -5,5 +5,6 @@
  *= require_self
  *= require reset
  *= require markdown
- *= require deildu
+ *= require layout
+ *= require common
 */
