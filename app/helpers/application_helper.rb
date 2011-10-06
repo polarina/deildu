@@ -6,6 +6,12 @@ module ApplicationHelper
     find_and_preserve(Redcarpet.new(text, *options).to_html)
   end
   
+  def link(controller, action, params = { }, &block)
+    if current_user.has_permission_to?({:controller => controller.to_s, :action => action.to_s}.merge(params))
+      block.call
+    end
+  end
+  
   def pretty_kredits(kredits)
     if kredits < 0
       "-" + number_to_human_size(kredits.abs)

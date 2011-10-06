@@ -1,6 +1,7 @@
 .section
   %ul.controls
-    %li= link_to "Ný síða", new_page_path
+    - link :pages, :new do
+      %li= link_to "Ný síða", new_page_path
   %h2 Síður
   
   %table

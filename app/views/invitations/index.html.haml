@@ -1,14 +1,15 @@
 .section
-  %h2 Nýr boðslykill
-  = form_for [@user, @invitation] do |f|
-    = f.error_messages
-    
-    %div
-      = f.label :email, "Netfang"
-      = f.text_field :email
-    
-    %div
-      = f.submit "Senda boðslykil"
+  - link :invitations, :create do
+    %h2 Nýr boðslykill
+    = form_for [@user, @invitation] do |f|
+      = f.error_messages
+      
+      %div
+        = f.label :email, "Netfang"
+        = f.text_field :email
+      
+      %div
+        = f.submit "Senda boðslykil"
 
 .section
   %h2 Innboðnir notendur

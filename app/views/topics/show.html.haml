@@ -1,7 +1,9 @@
 .section
   %ul.controls
-    %li= link_to "Svara", new_forum_topic_post_path(@forum, @topic)
-    %li= link_to "Eyða", forum_topic_path(@forum, @topic), :confirm => "Ertu viss um að þú viljir eyða þessum spjallþræði?", :method => :delete
+    - link :posts, :new, :topic_id => @topic.id do
+      %li= link_to "Svara", new_forum_topic_post_path(@forum, @topic)
+    - link :topics, :destroy, :id => @topic.id do
+      %li= link_to "Eyða", forum_topic_path(@forum, @topic), :confirm => "Ertu viss um að þú viljir eyða þessum spjallþræði?", :method => :delete
   %h2
     = link_to @forum.title, @forum
     &gt;
@@ -11,6 +13,9 @@
   
   - @topic.posts.each do |post|
     - message :user => post.user, :created_at => post.created_at, :content => post do
-      %li= link_to "Tilkynna", new_report_path(:post => post.id)
-      %li= link_to "Tilvitna", new_forum_topic_post_path(@forum, @topic, :quote => post.id)
-      %li= link_to "Eyða", forum_topic_post_path(@forum, @topic, post), :confirm => "Ertu viss um að þú viljir eyða þessu innleggi?", :method => :delete
+      - link :reports, :new, :post => post.id do
+        %li= link_to "Tilkynna", new_report_path(:post => post.id)
+      - link :posts, :new, :quote => post.id do
+        %li= link_to "Tilvitna", new_forum_topic_post_path(@forum, @topic, :quote => post.id)
+      - link :posts, :destroy, :id => post.id do
+        %li= link_to "Eyða", forum_topic_post_path(@forum, @topic, post), :confirm => "Ertu viss um að þú viljir eyða þessu innleggi?", :method => :delete

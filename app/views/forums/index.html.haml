@@ -1,6 +1,7 @@
 .section
   %ul.controls
-    %li= link_to "Nýr spjallflokkur", new_forum_path
+    - link :forums, :new do
+      %li= link_to "Nýr spjallflokkur", new_forum_path
   %h2 Spjallborð
   
   %table
@@ -22,11 +23,15 @@
           %td= forum.topics_count
           %td= forum.posts_count
           %td.nowrap
-            = link_to forum.last_subject, forum_topic_path(forum, forum.last_topic_id)
-            af
-            = link_to forum.last_username, forum.last_username
-            %br
-            = forum.last_created_at.to_time
+            - if forum.last_subject
+              = link_to forum.last_subject, forum_topic_path(forum, forum.last_topic_id)
+              af
+              = link_to forum.last_username, forum.last_username
+              %br
+              - if forum.last_created_at
+                = forum.last_created_at.to_time
+            - else
+              Engir póstar
       - if @forums.empty?
         %tr
           %td.notice{:colspan => 5}

@@ -10,10 +10,14 @@
     #navigation
       %ul
         - unless current_user.nil?
-          %li= link_to "Aðalsíða", root_path
-          %li= link_to "Torrent", torrents_path
-          %li= link_to "Deila", new_torrent_path
-          %li= link_to "Spjallborð", forums_path
+          - link :front, :index do
+            %li= link_to "Aðalsíða", root_path
+          - link :torrents, :index do
+            %li= link_to "Torrent", torrents_path
+          - link :torrents, :create do
+            %li= link_to "Deila", new_torrent_path
+          - link :forums, :index do
+            %li= link_to "Spjallborð", forums_path
           %li= link_to "Eftirspurnir", "#"
           %li= link_to "Prófíll", "#"
           %li= link_to "Hjálp", "/help"
@@ -27,9 +31,12 @@
       #status
         .right
           %ul
-            %li= link_to "Bönn", bans_path
-            %li= link_to "Tilkynningar", reports_path
-            %li= link_to "Síður", pages_path
+            - link :bans, :index do
+              %li= link_to "Bönn", bans_path
+            - link :reports, :index do
+              %li= link_to "Tilkynningar", reports_path
+            - link :pages, :index do
+              %li= link_to "Síður", pages_path
             %li= link_to "Útskrá", auth_users_path, :method => :delete
           %ul
             %li= link_to "Innhólf", inbox_messages_path

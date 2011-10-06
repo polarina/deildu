@@ -1,8 +1,11 @@
 .section
   %ul.controls
-    %li= link_to "Tilkynna", new_report_path(:torrent => @torrent.id)
-    %li= link_to "Breyta", edit_torrent_path(@torrent)
-    %li= link_to "Eyða", @torrent, :method => :delete, :confirm => "Ertu viss um að þú viljir eyða þessu torrenti?"
+    - link :reports, :new, :torrent => @torrent.id do
+      %li= link_to "Tilkynna", new_report_path(:torrent => @torrent.id)
+    - link :torrents, :edit, :id => @torrent.id do
+      %li= link_to "Breyta", edit_torrent_path(@torrent)
+    - link :torrents, :destroy, :id => @torrent.id do
+      %li= link_to "Eyða", @torrent, :method => :delete, :confirm => "Ertu viss um að þú viljir eyða þessu torrenti?"
   %h2= @torrent.title
   
   %dl
@@ -35,11 +38,15 @@
 
 .section
   %ul.controls
-    %li= link_to "Nýtt", new_torrent_comment_path(@torrent)
+    - link :comments, :new do
+      %li= link_to "Nýtt", new_torrent_comment_path(@torrent)
   %h2 Athugasemdir
   
   - @comments.each do |comment|
     - message :user => comment.user, :created_at => comment.created_at, :content => comment do
-      %li= link_to "Tilkynna", new_report_path(:comment => comment.id)
-      %li= link_to "Breyta", edit_torrent_comment_path(@torrent, comment)
-      %li= link_to "Eyða", torrent_comment_path(@torrent, comment), :method => :delete, :confirm => "Ertu viss um að þú viljir eyða þessari athugasemd?"
+      - link :reports, :new, :comment => comment.id do
+        %li= link_to "Tilkynna", new_report_path(:comment => comment.id)
+      - link :comments, :edit, :id => comment.id do
+        %li= link_to "Breyta", edit_torrent_comment_path(@torrent, comment)
+      - link :comments, :destroy, :id => comment.id do
+        %li= link_to "Eyða", torrent_comment_path(@torrent, comment), :method => :delete, :confirm => "Ertu viss um að þú viljir eyða þessari athugasemd?"
