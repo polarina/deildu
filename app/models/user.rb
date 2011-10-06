@@ -85,7 +85,15 @@ class User < ActiveRecord::Base
         },
         "posts" => {
           "create" => true,
-          "destroy" => Proc.new { Post.find(params[:id]).user == self },
+          "destroy" => Proc.new do
+            post = Post.find(params[:id])
+            post_topic_id = post.topic_id
+            post_created_at = post.created_at
+            
+            post.user == self and not Post.limit(1).select(1).where{
+              (topic_id == post_topic_id) & (created_at > post_created_at)
+            }.first
+          end,
         },
         "reports" => {
           "create" => true,
