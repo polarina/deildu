@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 class ReportsController < ApplicationController
   respond_to :html
   
@@ -11,8 +13,8 @@ class ReportsController < ApplicationController
     
     raise ActionController::RoutingError.new('Not Found') if @report.victim.nil?
     
-    @report.save
-    respond_with @report
+    flash[:notice] = "Tilkynning þín hefur verið móttekin." if @report.save
+    respond_with @report, :location => root_path
   end
   
   def index
