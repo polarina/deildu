@@ -26,6 +26,16 @@ class Torrent < ActiveRecord::Base
   validates :category,
     :associated => true
   
+  define_index do
+    indexes title
+    indexes description
+    indexes fyles.path, :as => :files
+    indexes info_name
+    indexes category.title, :as => :category
+    
+    has created_at
+  end
+  
   def infohash_hex
     self.infohash.unpack('H*')[0]
   end
@@ -123,6 +133,6 @@ class Torrent < ActiveRecord::Base
         t3.count.as(leechers_count),
         anonymous,
         user.username.as(username)
-      ]}.order{created_at.desc}
+      ]}#.order{created_at.desc}
   end
 end

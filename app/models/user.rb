@@ -192,17 +192,17 @@ class User < ActiveRecord::Base
   
   def uploaded_overview
     user = self.id
-    Torrent.overview.where{user_id == user}
+    Torrent.overview.where{user_id == user}.order{created_at.desc}
   end
   
   def leeching_overview
     user = self.id
-    Torrent.overview.joins{peers}.where{(peers.left != 0) & (peers.user_id == user)}
+    Torrent.overview.joins{peers}.where{(peers.left != 0) & (peers.user_id == user)}.order{created_at.desc}
   end
   
   def seeding_overview
     user = self.id
-    Torrent.overview.joins{peers}.where{(peers.left == 0) & (peers.user_id == user)}
+    Torrent.overview.joins{peers}.where{(peers.left == 0) & (peers.user_id == user)}.order{created_at.desc}
   end
   
   def received_messages

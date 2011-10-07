@@ -23,7 +23,14 @@ class TorrentsController < ApplicationController
   end
   
   def index
-    @torrents = Torrent.overview
+    if params[:search]
+      ids = Torrent.search_for_ids params[:search], :match_mode => :boolean, :field_weights => { :title => 7, :description => 5, :category => 2 }
+      
+      @torrents = [ ]
+      @torrents = Torrent.overview.where(:id => ids).order("idx(array#{ids.inspect}, torrents.id) ASC") unless ids.empty?
+    else
+      @torrents = Torrent.overview.order{created_at.desc}
+    end
   end
   
   def show
