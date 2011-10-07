@@ -24,7 +24,7 @@ class TorrentsController < ApplicationController
   
   def index
     if params[:search]
-      ids = Torrent.search_for_ids params[:search], :match_mode => :boolean, :field_weights => { :title => 7, :description => 5, :category => 2 }
+      ids = Torrent.search_for_ids params[:search], :field_weights => { :title => 7, :description => 5, :category => 2 }
       
       @torrents = [ ]
       @torrents = Torrent.overview.where(:id => ids).order("idx(array#{ids.inspect}, torrents.id) ASC") unless ids.empty?
