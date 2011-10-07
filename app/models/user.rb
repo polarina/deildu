@@ -10,6 +10,7 @@ class User < ActiveRecord::Base
   
   has_many :bans
   has_many :blocks
+  has_many :news
   has_many :reports
   
   attr_accessible :username,
@@ -126,6 +127,11 @@ class User < ActiveRecord::Base
           "update" => true,
         },
         "forums" => {
+          "create" => true,
+          "destroy" => true,
+          "update" => true,
+        },
+        "news" => {
           "create" => true,
           "destroy" => true,
           "update" => true,

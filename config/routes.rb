@@ -17,6 +17,7 @@ Deildu::Application.routes.draw do
     end
   end
   
+  resources :news
   resources :pages
   
   resources :reports do

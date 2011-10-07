@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111005193300) do
+ActiveRecord::Schema.define(:version => 20111006223000) do
 
   create_table "bans", :force => true do |t|
     t.datetime "created_at",                :null => false
@@ -96,9 +96,11 @@ ActiveRecord::Schema.define(:version => 20111005193300) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
     t.integer  "user_id",    :null => false
-    t.string   "title",      :null => false
-    t.text     "news",       :null => false
+    t.text     "content",    :null => false
   end
+
+  add_index "news", ["created_at"], :name => "index_news_on_created_at"
+  add_index "news", ["user_id"], :name => "index_news_on_user_id"
 
   create_table "notes", :force => true do |t|
     t.datetime "created_at", :null => false

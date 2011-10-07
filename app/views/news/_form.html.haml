@@ -1,0 +1,15 @@
+.section
+  - if @news.new_record?
+    %h2 Ný frétt
+  - else
+    %h2 Breyta frétt
+  
+  = form_for @news do |f|
+    = f.error_messages
+    
+    %div
+      = f.label :content, "Frétt"
+      = f.text_area :content, :size => "10x12"
+    
+    %div
+      = f.submit "Vista frétt"

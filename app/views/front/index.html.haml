@@ -1,6 +1,17 @@
 .section
+  %ul.controls
+    - link :news, :new do
+      %li= link_to "Ný frétt", new_news_path
   %h2 Fréttir &amp; Tilkynningar
-  %p Engar fréttir
+  
+  - @news.each do |news|
+    - message :user => news.user, :created_at => news.created_at, :content => news do
+      - link :news, :edit, :id => news.id do
+        %li= link_to "Breyta", edit_news_path(news)
+      - link :news, :destroy, :id => news.id do
+        %li= link_to "Eyða", news_path(news), :confirm => "Ertu viss um að þú viljir eyða þessari frétt?", :method => :delete
+  - if @news.empty?
+    %p Engar fréttir
 
 .section
   %h2 Topp 5 torrent
