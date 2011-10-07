@@ -5,7 +5,7 @@
   %h2 Fréttir &amp; Tilkynningar
   
   - @news.each do |news|
-    - message :user => news.user, :created_at => news.created_at, :content => news do
+    - message :user => news.user, :created_at => news.created_at, :content => news, :avatar => false do
       - link :news, :edit, :id => news.id do
         %li= link_to "Breyta", edit_news_path(news)
       - link :news, :destroy, :id => news.id do

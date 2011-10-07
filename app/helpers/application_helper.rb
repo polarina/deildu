@@ -37,8 +37,8 @@ module ApplicationHelper
         end
       end
       
-      haml_tag :div, image_tag(user.gravatar_url, :alt => ""), :class => :avatar
-      haml_tag :div, markdown(content.content), :class => [:content, :markdown]
+      haml_tag :div, image_tag(user.gravatar_url, :alt => ""), :class => :avatar unless options[:avatar] == false
+      haml_tag :div, markdown(content.content), :class => (options[:avatar] == false ? [:markdown, :avatarless] : [:markdown])
       haml_tag :div, :class => :clear
     end
   end
