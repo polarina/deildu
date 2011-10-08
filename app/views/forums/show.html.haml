@@ -20,9 +20,16 @@
         %tr
           %td ?
           %td= link_to topic.subject, forum_topic_path(@forum, topic)
-          %td ?
-          %td= link_to topic.user.username, topic.user
-          %td ?
+          %td= topic.posts_count
+          %td= link_to topic.username, user_path(topic.username)
+          %td.nowrap
+            - if topic.last_username
+              Eftir
+              = link_to topic.last_username, user_path(topic.last_username)
+              %br
+              = topic.last_created_at.to_time
+            - else
+              Engir póstar.
       - if @topics.empty?
         %tr
           %td.notice{:colspan => 5} Engir spjallþræðir.

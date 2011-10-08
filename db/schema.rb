@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111006223000) do
+ActiveRecord::Schema.define(:version => 20111007233700) do
 
   create_table "bans", :force => true do |t|
     t.datetime "created_at",                :null => false
@@ -173,7 +173,6 @@ ActiveRecord::Schema.define(:version => 20111006223000) do
     t.integer  "forum_id",   :null => false
     t.integer  "user_id",    :null => false
     t.string   "subject",    :null => false
-    t.text     "post",       :null => false
   end
 
   add_index "topics", ["forum_id"], :name => "index_topics_on_forum_id"

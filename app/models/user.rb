@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
   include Gravtastic
   
   has_secure_password
-  gravtastic :size => 150, :rating => "X"
+  gravtastic :size => 150, :rating => "X", :default => :monsterid
   
   has_many :invitations
   has_many :invitees, :class_name => "User", :foreign_key => "inviter_id"
@@ -44,6 +44,14 @@ class User < ActiveRecord::Base
     controller, action = params[:controller], params[:action]
     action = "create" if action == "new"
     action = "update" if action == "edit"
+    
+    def inst(klass, something)
+      if something.class == klass
+        something
+      else
+        klass.find(something)
+      end
+    end
     
     permissions = [
       {
@@ -87,14 +95,15 @@ class User < ActiveRecord::Base
         "posts" => {
           "create" => true,
           "destroy" => Proc.new do
-            post = Post.find(params[:id])
+            post = inst Post, params[:id]
             post_topic_id = post.topic_id
-            post_created_at = post.created_at
             
-            post.user == self and not Post.limit(1).select(1).where{
-              (topic_id == post_topic_id) & (created_at > post_created_at)
-            }.first
+            oldest = Post.limit(1).select{id}.where{topic_id == post_topic_id}.order{created_at.asc}
+            newest = Post.limit(1).select{id}.where{topic_id == post_topic_id}.order{created_at.desc}
+            
+            post.user_id == self.id and newest.first.id == post.id and oldest.first.id != post.id
           end,
+          "update" => Proc.new { inst(Post, params[:id]).user_id == self.id },
         },
         "reports" => {
           "create" => true,
@@ -147,7 +156,8 @@ class User < ActiveRecord::Base
           "update" => true,
         },
         "posts" => {
-          "delete" => true,
+          "destroy" => true,
+          "update" => true,
         },
         "reports" => {
           "index" => true,

@@ -19,6 +19,7 @@ class TopicsController < ApplicationController
   def show
     @forum = Forum.find params[:forum_id]
     @topic = @forum.topics.find params[:id]
+    @posts = @topic.posts.order{created_at.asc}.includes(:user)
     respond_with @forum, @topic
   end
   

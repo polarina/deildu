@@ -42,6 +42,6 @@ class Forum < ActiveRecord::Base
         "(SELECT username FROM (#{lui.to_sql}) AS a) AS last_username",
         "(SELECT created_at FROM (#{lui.to_sql}) AS a) AS last_created_at",
         "(SELECT subject FROM (#{lui.to_sql}) AS a) AS last_subject"
-      ]}
+      ]}.order{ordering.asc}
   end
 end

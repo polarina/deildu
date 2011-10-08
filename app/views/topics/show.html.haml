@@ -9,13 +9,13 @@
     &gt;
     = @topic.subject
   
-  - message :user => @topic.user, :created_at => @topic.created_at, :content => @topic
-  
-  - @topic.posts.each do |post|
+  - @posts.each do |post|
     - message :user => post.user, :created_at => post.created_at, :content => post do
       - link :reports, :new, :post => post.id do
         %li= link_to "Tilkynna", new_report_path(:post => post.id)
       - link :posts, :new, :quote => post.id do
         %li= link_to "Tilvitna", new_forum_topic_post_path(@forum, @topic, :quote => post.id)
-      - link :posts, :destroy, :id => post.id do
+      - link :posts, :edit, :id => post do
+        %li= link_to "Breyta", edit_forum_topic_post_path(@forum, @topic, post)
+      - link :posts, :destroy, :id => post do
         %li= link_to "Eyða", forum_topic_post_path(@forum, @topic, post), :confirm => "Ertu viss um að þú viljir eyða þessu innleggi?", :method => :delete
