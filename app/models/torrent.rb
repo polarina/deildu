@@ -34,6 +34,8 @@ class Torrent < ActiveRecord::Base
     indexes category.title, :as => :category
     
     has created_at
+    
+    set_property :delta => true
   end
   
   def infohash_hex

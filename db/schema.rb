@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111008185700) do
+ActiveRecord::Schema.define(:version => 20111008214300) do
 
   create_table "bans", :force => true do |t|
     t.datetime "created_at",                :null => false
@@ -186,18 +186,19 @@ ActiveRecord::Schema.define(:version => 20111008185700) do
   add_index "topics", ["forum_id"], :name => "index_topics_on_forum_id"
 
   create_table "torrents", :force => true do |t|
-    t.datetime "created_at",                                       :null => false
-    t.datetime "updated_at",                                       :null => false
-    t.string   "title",                                            :null => false
-    t.boolean  "anonymous",                                        :null => false
-    t.integer  "user_id",                                          :null => false
-    t.integer  "category_id",                                      :null => false
-    t.text     "description",                                      :null => false
-    t.decimal  "size",              :precision => 45, :scale => 0, :null => false
-    t.binary   "infohash",                                         :null => false
-    t.string   "info_name",                                        :null => false
-    t.integer  "info_piece_length",                                :null => false
-    t.binary   "info_pieces",                                      :null => false
+    t.datetime "created_at",                                                         :null => false
+    t.datetime "updated_at",                                                         :null => false
+    t.string   "title",                                                              :null => false
+    t.boolean  "anonymous",                                                          :null => false
+    t.integer  "user_id",                                                            :null => false
+    t.integer  "category_id",                                                        :null => false
+    t.text     "description",                                                        :null => false
+    t.decimal  "size",              :precision => 45, :scale => 0,                   :null => false
+    t.binary   "infohash",                                                           :null => false
+    t.string   "info_name",                                                          :null => false
+    t.integer  "info_piece_length",                                                  :null => false
+    t.binary   "info_pieces",                                                        :null => false
+    t.boolean  "delta",                                            :default => true, :null => false
   end
 
   add_index "torrents", ["category_id"], :name => "index_torrents_on_category_id"
