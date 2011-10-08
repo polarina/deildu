@@ -22,5 +22,5 @@
     %li= link_to "Ný athugasemd", new_report_note_path(@report)
   %h2 Til athugunar
   
-  - @report.notes.each do |note|
+  - @notes.each do |note|
     - message :user => note.user, :created_at => note.created_at, :content => note

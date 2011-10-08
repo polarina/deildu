@@ -156,7 +156,13 @@ class User < ActiveRecord::Base
           "update" => true,
         },
         "posts" => {
-          "destroy" => true,
+          "destroy" => Proc.new do
+            post = inst Post, params[:id]
+            post_topic_id = post.topic_id
+            
+            oldest = Post.limit(1).select{id}.where{topic_id == post_topic_id}.order{created_at.asc}
+            oldest.first.id != post.id
+          end,
           "update" => true,
         },
         "reports" => {

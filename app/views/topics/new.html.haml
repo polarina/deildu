@@ -4,15 +4,17 @@
     &gt; Nýr spjallþráður
   
   = form_for [@forum, @topic] do |f|
-    = f.error_messages
-    
-    %div
-      = f.label :subject, "Efni"
-      = f.text_field :subject
-    
-    %div
-      = f.label :post, "Innlegg"
-      = f.text_area :post, :size => "10x12"
-    
-    %div
-      = f.submit "Vista"
+    = f.fields_for @post do |g|
+      = f.error_messages
+      = g.error_messages
+      
+      %div
+        = f.label :subject, "Efni"
+        = f.text_field :subject
+      
+      %div
+        = g.label :post, "Innlegg"
+        = g.text_area :post, :size => "10x12"
+      
+      %div
+        = f.submit "Vista"

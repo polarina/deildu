@@ -9,7 +9,7 @@ class Comment < ActiveRecord::Base
     :associated => true
   
   validates :comment,
-    :presence => true
+    :length => { :within => 5..8192 }
   
   def content
     comment

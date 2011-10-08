@@ -35,6 +35,7 @@ class ReportsController < ApplicationController
   
   def show
     @report = Report.find params[:id]
+    @notes = @report.notes.includes(:user).order{created_at.desc}
     respond_with @report
   end
 end

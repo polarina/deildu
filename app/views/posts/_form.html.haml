@@ -4,7 +4,10 @@
     &gt;
     = link_to @topic.subject, forum_topic_path(@forum, @topic)
     &gt;
-    Nýtt innlegg
+    - if @post.new_record?
+      Nýtt innlegg
+    - else
+      Breyta innlegg
   
   = form_for [@forum, @topic, @post] do |f|
     = f.error_messages

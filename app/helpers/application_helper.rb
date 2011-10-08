@@ -20,6 +20,10 @@ module ApplicationHelper
     end
   end
   
+  def gravatar_image(user, params = { })
+    image_tag(user.gravatar_url, params.merge(:alt => "", :width => 150, :height => 150))
+  end
+  
   def message(options, &block)
     user = options[:user]
     created_at = options[:created_at]
@@ -37,7 +41,7 @@ module ApplicationHelper
         end
       end
       
-      haml_tag :div, image_tag(user.gravatar_url, :alt => ""), :class => :avatar unless options[:avatar] == false
+      haml_tag :div, gravatar_image(user), :class => :avatar unless options[:avatar] == false
       haml_tag :div, markdown(content.content), :class => (options[:avatar] == false ? [:markdown, :avatarless] : [:markdown])
       haml_tag :div, :class => :clear
     end

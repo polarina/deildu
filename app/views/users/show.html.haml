@@ -9,6 +9,8 @@
     %dd= @user.created_at
     %dt Kredits
     %dd= pretty_kredits @user.kredits
+    %dt Avatar
+    %dd= gravatar_image(@user, :class => :border)
     %dt Innsend torrent
     %dd
       - torrent_overview @user.uploaded_overview, :download => false, :user => false, :empty_message => "Engin innsend torrent."

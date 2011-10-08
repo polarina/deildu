@@ -8,5 +8,5 @@ class Report < ActiveRecord::Base
   attr_accessible :reason
   
   validates :reason,
-    :presence => true
+    :length => { :within => 5..8192 }
 end

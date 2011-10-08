@@ -15,7 +15,7 @@ class Forum < ActiveRecord::Base
   validates :description,
     :presence => true
   
-  def self.overview
+  def self.overview(current_user)
     agr_topics = Forum.joins{topics.outer}.group{id}.select{[id, count(topics.id).as(count)]}
     agr_posts = Forum.joins{[topics.outer.posts.outer]}.group{id}.select{[id, count(posts.id).as(count)]}
     
@@ -25,6 +25,8 @@ class Forum < ActiveRecord::Base
     lui = baset.select{[
       id.as(topic_id),
       subject.as(subject),
+      "(#{base.select{id}.to_sql}) AS post_id",
+      "(#{base.select{user_id}.to_sql}) AS user_id",
       "(#{base.joins{user}.select{user.username}.to_sql}) AS username",
       "(#{base.select{created_at}.to_sql}) AS created_at"
     ]}.order("created_at DESC NULLS LAST").limit(1)
@@ -32,13 +34,16 @@ class Forum < ActiveRecord::Base
     Forum
       .joins("INNER JOIN (#{agr_topics.to_sql}) AS t1 ON t1.id = forums.id")
       .joins("INNER JOIN (#{agr_posts.to_sql}) AS t2 ON t2.id = forums.id")
+      .joins("LEFT OUTER JOIN read_topics AS t3 ON t3.user_id = #{current_user.id} AND t3.topic_id = (SELECT topic_id FROM (#{lui.to_sql}) AS a)")
       .select{[
         id,
         title,
         description,
         t1.count.as(topics_count),
         t2.count.as(posts_count),
-        "(SELECT topic_id FROM (#{lui.to_sql} ) AS a) AS last_topic_id",
+        t3.post_id.as(last_post_read),
+        "(SELECT topic_id FROM (#{lui.to_sql}) AS a) AS last_topic_id",
+        "(SELECT post_id FROM (#{lui.to_sql}) AS a) AS last_post_id",
         "(SELECT username FROM (#{lui.to_sql}) AS a) AS last_username",
         "(SELECT created_at FROM (#{lui.to_sql}) AS a) AS last_created_at",
         "(SELECT subject FROM (#{lui.to_sql}) AS a) AS last_subject"

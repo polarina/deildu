@@ -13,10 +13,10 @@ class Message < ActiveRecord::Base
     :associated => true
   
   validates :subject,
-    :presence => true
+    :length => { :within => 5..48 }
   
   validates :message,
-    :presence => true
+    :length => { :within => 5..8192 }
   
   def content
     message

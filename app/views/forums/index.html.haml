@@ -15,7 +15,7 @@
     %tbody
       - @forums.each do |forum|
         %tr
-          %td ?
+          %td= forum.last_post_read == forum.last_post_id ? "Já" : "Nei"
           %td
             = link_to forum.title, forum
             %br
@@ -26,7 +26,7 @@
             - if forum.last_subject
               = link_to forum.last_subject, forum_topic_path(forum, forum.last_topic_id)
               af
-              = link_to forum.last_username, forum.last_username
+              = link_to forum.last_username, user_path(forum.last_username)
               %br
               - if forum.last_created_at
                 = forum.last_created_at.to_time

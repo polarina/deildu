@@ -13,7 +13,7 @@ class ForumsController < ApplicationController
   end
   
   def index
-    respond_with(@forums = Forum.overview)
+    respond_with(@forums = Forum.overview(current_user))
   end
   
   def edit
@@ -26,7 +26,7 @@ class ForumsController < ApplicationController
   
   def show
     @forum = Forum.find params[:id]
-    @topics = Topic.overview.where(:forum_id => @forum.id)
+    @topics = Topic.overview(current_user).where(:forum_id => @forum.id)
     respond_with @forum
   end
   
