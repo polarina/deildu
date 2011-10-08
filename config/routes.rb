@@ -19,6 +19,7 @@ Deildu::Application.routes.draw do
   
   resources :news
   resources :pages
+  resource :profile
   
   resources :reports do
     resources :notes

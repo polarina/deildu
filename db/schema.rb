@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111008163800) do
+ActiveRecord::Schema.define(:version => 20111008185700) do
 
   create_table "bans", :force => true do |t|
     t.datetime "created_at",                :null => false
@@ -215,6 +215,7 @@ ActiveRecord::Schema.define(:version => 20111008163800) do
     t.decimal  "kredits",                         :precision => 45, :scale => 0, :default => 0,    :null => false
     t.boolean  "allowed",                                                        :default => true, :null => false
     t.integer  "permission_level",                                               :default => 0,    :null => false
+    t.boolean  "show_avatars",                                                   :default => true, :null => false
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

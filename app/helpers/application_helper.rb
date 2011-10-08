@@ -28,6 +28,8 @@ module ApplicationHelper
     user = options[:user]
     created_at = options[:created_at]
     content = options[:content]
+    avatar = options[:avatar]
+    avatar = false unless current_user.show_avatars
     
     haml_tag :div, :class => :message do
       haml_tag :a, :name => content.class.to_s.downcase + content.id.to_s
@@ -41,8 +43,8 @@ module ApplicationHelper
         end
       end
       
-      haml_tag :div, gravatar_image(user), :class => :avatar unless options[:avatar] == false
-      haml_tag :div, markdown(content.content), :class => (options[:avatar] == false ? [:markdown, :avatarless] : [:markdown])
+      haml_tag :div, gravatar_image(user), :class => :avatar unless avatar == false
+      haml_tag :div, markdown(content.content), :class => (avatar == false ? [:markdown, :avatarless] : [:markdown])
       haml_tag :div, :class => :clear
     end
   end

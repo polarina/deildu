@@ -1,0 +1,55 @@
+.section
+  %h2 Prófíll
+  
+  %hr
+  
+  %h2 Basic stöff
+  
+  = form_for @user, :url => profile_path do |f|
+    = hidden_field_tag :change, "basic"
+    
+    %div
+      = f.label :show_avatars, "Smámyndir"
+      = f.select :show_avatars, [["Já", true], ["Nei", false]]
+    
+    %div
+      = f.submit "Vista"
+  
+  %hr
+  
+  %h2 Breyta lykilorði
+  
+  = form_for @user, :url => profile_path do |f|
+    = f.error_messages
+    = hidden_field_tag :change, "password"
+    
+    %div
+      = f.label :current_password, "Núverandi lykilorð"
+      = f.password_field :current_password
+    
+    %div
+      = f.label :password, "Lykilorð"
+      = f.password_field :password
+    
+    %div
+      = f.label :password_confirmation, "Lykilorð aftur"
+      = f.password_field :password_confirmation
+    
+    %div
+      = f.submit "Breyta lykilorði"
+  
+  %hr
+  
+  %h2 Endursetja auðkenni
+  
+  = form_for @user, :url => profile_path do |f|
+    = hidden_field_tag :change, "identity"
+    
+    %div
+      %p
+        Endursetning auðkennis mun ógilda allar torrent skrár sem þú hefur
+        sótt, jafnvel þau sem nú þegar í gangi. Ef auðkenni er endursett, þarf
+        að sækja aftur þá torrent skrár sem eru virk í torrent forriti þínu.
+    
+    %div
+      = f.submit "Endursetja auðkenni", "data-confirm" => "Ertu viss um að þú viljir endursetja auðkenni þitt?"

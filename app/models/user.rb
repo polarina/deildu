@@ -16,7 +16,8 @@ class User < ActiveRecord::Base
   attr_accessible :username,
                   :password,
                   :password_confirmation,
-                  :email
+                  :email,
+                  :show_avatars
   
   validates :username,
     :uniqueness => true,
@@ -25,7 +26,8 @@ class User < ActiveRecord::Base
   
   validates :password,
     :length => { :minimum => 8 },
-    :if => :password_digest_changed?
+    :allow_nil => true
+    #:if => :password_digest_changed?
   
   validates :email,
     :uniqueness => true,
@@ -104,6 +106,10 @@ class User < ActiveRecord::Base
             post.user_id == self.id and newest.first.id == post.id and oldest.first.id != post.id
           end,
           "update" => Proc.new { inst(Post, params[:id]).user_id == self.id },
+        },
+        "profiles" => {
+          "show" => true,
+          "update" => true,
         },
         "reports" => {
           "create" => true,
