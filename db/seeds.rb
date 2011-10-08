@@ -12,6 +12,7 @@ Category.find_or_initialize_by_id(1).update_attributes!(:id => 1, :title => "DVD
 Category.find_or_initialize_by_id(2).update_attributes!(:id => 2, :title => "Annað")
 Category.find_or_initialize_by_id(3).update_attributes!(:id => 3, :title => "High Definition")
 Category.find_or_initialize_by_id(4).update_attributes!(:id => 4, :title => "Leikir")
+Category.find_or_initialize_by_id(5).update_attributes!(:id => 5, :title => "Þættir")
 
 Status.find_or_initialize_by_id(1).update_attributes!(:id => 1, :status => "Opið")
 Status.find_or_initialize_by_id(2).update_attributes!(:id => 2, :status => "Lokað")

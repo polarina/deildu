@@ -11,6 +11,7 @@ class Category < ActiveRecord::Base
       2 => "categories/annad.png",
       3 => "categories/hi-def.png",
       4 => "categories/leikir.png",
+      5 => "categories/thaettir.png",
     }[id]
   end
   
