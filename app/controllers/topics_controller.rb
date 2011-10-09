@@ -39,6 +39,7 @@ class TopicsController < ApplicationController
     @forum = Forum.find params[:forum_id]
     @topic = @forum.topics.find params[:id]
     @posts = @topic.posts.order{created_at.asc}.includes(:user)
+    @new_post = @topic.posts.new
     
     ReadTopic.find_or_initialize_by_user_id_and_topic_id(current_user.id, @topic.id).update_attributes!(:post_id => @posts.last.id)
     

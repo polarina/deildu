@@ -19,3 +19,14 @@
         %li= link_to "Breyta", edit_forum_topic_post_path(@forum, @topic, post)
       - link :posts, :destroy, :id => post do
         %li= link_to "Eyða", forum_topic_post_path(@forum, @topic, post), :confirm => "Ertu viss um að þú viljir eyða þessu innleggi?", :method => :delete
+  
+  .section.headrepeat
+    %ul.controls
+      - link :posts, :new, :topic_id => @topic.id do
+        %li= link_to "Svara", new_forum_topic_post_path(@forum, @topic)
+      - link :topics, :destroy, :id => @topic.id do
+        %li= link_to "Eyða", forum_topic_path(@forum, @topic), :confirm => "Ertu viss um að þú viljir eyða þessum spjallþræði?", :method => :delete
+    %h2{:style => "margin-bottom: 0"}
+      = link_to @forum.title, @forum
+      &gt;
+      = @topic.subject
