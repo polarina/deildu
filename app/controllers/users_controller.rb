@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 class UsersController < ApplicationController
   skip_before_filter :requires_authentication, :only => [:new, :create, :auth]
   
@@ -55,6 +57,7 @@ class UsersController < ApplicationController
           redirect_to root_path
         end
       else
+        flash[:error] = "Rangt notendanafn eða lykilorð"
         redirect_to auth_users_path
       end
     end

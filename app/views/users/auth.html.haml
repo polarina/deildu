@@ -1,6 +1,10 @@
 .section
   %h2 Innskráning
   = form_for @user, :url => auth_users_path do |f|
+    - if flash[:error]
+      .errorExplanation
+        %h2= flash[:error]
+    
     - if @return
       = hidden_field_tag :return, @return
     
