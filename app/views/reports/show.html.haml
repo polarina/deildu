@@ -27,3 +27,5 @@
   
   - @notes.each do |note|
     - message :user => note.user, :created_at => note.created_at, :content => note
+  - if @notes.empty?
+    .message.notice Engar athugasemdir.

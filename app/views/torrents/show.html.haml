@@ -53,3 +53,5 @@
         %li= link_to "Breyta", edit_torrent_comment_path(@torrent, comment)
       - link :comments, :destroy, :id => comment.id do
         %li= link_to "Eyða", torrent_comment_path(@torrent, comment), :method => :delete, :confirm => "Ertu viss um að þú viljir eyða þessari athugasemd?"
+  - if @comments.empty?
+    .message.notice Engar athugasemdir.
