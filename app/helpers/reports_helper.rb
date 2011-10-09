@@ -1,6 +1,6 @@
 module ReportsHelper
   def link_report(report)
-    case report.victim.class.to_s
+    case report.victim_type
       when "Comment" then
         link_to "comment ##{report.victim_id}", report_path(report)
       when "Post" then
@@ -11,13 +11,25 @@ module ReportsHelper
   end
   
   def link_victim(report)
-    case report.victim.class.to_s
+    case report.victim_type
       when "Comment" then
-        link_to "comment ##{report.victim_id}", torrent_path(report.victim.torrent_id, :anchor => "comment" + report.victim_id.to_s)
+        if report.victim
+          link_to "comment ##{report.victim_id}", torrent_path(report.victim.torrent_id, :anchor => "comment" + report.victim_id.to_s)
+        else
+          "comment ##{report.victim_id}"
+        end
       when "Post" then
-        link_to "post ##{report.victim_id}", forum_topic_path(report.victim.topic.forum_id, report.victim.topic_id, :anchor => "post" + report.victim_id.to_s)
+        if report.victim
+          link_to "post ##{report.victim_id}", forum_topic_path(report.victim.topic.forum_id, report.victim.topic_id, :anchor => "post" + report.victim_id.to_s)
+        else
+          "comment ##{report.victim_id}"
+        end
       when "Torrent" then
-        link_to "torrent ##{report.victim_id}", torrent_path(report.id)
+        if report.victim
+          link_to "torrent ##{report.victim_id}", torrent_path(report.id)
+        else
+          "comment ##{report.victim_id}"
+        end
     end
   end
   

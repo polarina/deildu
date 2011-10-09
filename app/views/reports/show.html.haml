@@ -9,7 +9,10 @@
     %dd= link_to @report.user.username, @report.user
     
     %dt Tilkynnti
-    %dd= link_to @report.victim.user.username, @report.victim.user
+    - if @report.victim
+      %dd= link_to @report.victim.user.username, @report.victim.user
+    - else
+      %dd Óvitað
     
     %dt Something
     %dd= link_victim @report

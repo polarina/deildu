@@ -14,7 +14,10 @@
         %tr
           %td.nowrap= report.created_at
           %td= link_to report.user.username, report.user
-          %td= link_to report.victim.user.username, report.victim.user
+          - if report.victim
+            %td= link_to report.victim.user.username, report.victim.user
+          - else
+            %td Óvitað
           %td!= link_report report
           %td= report.status.status
       - if @reports.empty?
