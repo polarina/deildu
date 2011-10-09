@@ -39,7 +39,7 @@ class TorrentsController < ApplicationController
     
     respond_to do |format|
       format.html
-      format.torrent { render :text => @torrent.torrent_file(current_user, request.host).bencode }
+      format.torrent { render :text => @torrent.torrent_file(current_user, request).bencode }
     end
   end
   
