@@ -30,6 +30,9 @@
               %tr
                 %td.nowrap= number_to_human_size(fyle.size)
                 %td= fyle.path
+    - else
+      %dt Skrá
+      %dd= @torrent.info_name
     %dt Innsendandi
     - if @torrent.anonymous
       %dd.italic Nafnlaust
