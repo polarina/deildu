@@ -21,30 +21,33 @@ body
   width: 970px
   height: 55px
   
+  .buttons
+    float: right
+    left: -50%
+    position: relative
+  
   ul
-    float: left
     position: relative
     left: 50%
     
-    li
-      float: left
-      position: relative
-      right: 50%
-      background: image-url("menu_sep.png") no-repeat 0% 50%
-      
-      &:first-child
-        background: none
-      
-      a
-        color: white
-        text-transform: uppercase
-        display: block
-        padding: 0 18px
-        line-height: 55px
-        height: 55px
-        
-        &:hover
-          color: #666666
+  li
+    float: left
+    position: relative
+    background: image-url("menu_sep.png") no-repeat 0% 50%
+    
+    &:first-child
+      background: none
+    
+  a
+    color: white
+    text-transform: uppercase
+    display: block
+    padding: 0 18px
+    line-height: 55px
+    height: 55px
+    
+    &:hover
+      color: #666666
 
 #status
   padding: 8px 20px

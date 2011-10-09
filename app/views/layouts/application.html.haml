@@ -8,25 +8,26 @@
   %body
     %a#logo{:href => root_path}
     #navigation
-      %ul
-        - unless current_user.nil?
-          - link :front, :index do
-            %li= link_to "Aðalsíða", root_path
-          - link :torrents, :index do
-            %li= link_to "Torrent", torrents_path
-          - link :torrents, :create do
-            %li= link_to "Deila", new_torrent_path
-          - link :forums, :index do
-            %li= link_to "Spjallborð", forums_path
-          %li= link_to "Eftirspurnir", "#"
-          %li= link_to "Prófíll", profile_path
-          %li= link_to "Hjálp", "/help"
-          %li= link_to "Reglur", "/rules"
-        - else
-          %li= link_to "Innskráning", auth_users_path
-          %li= link_to "Nýskráning", new_user_path
-          %li= link_to "Hjálp", "/help"
-          %li= link_to "Reglur", "/rules"
+      .buttons
+        %ul
+          - unless current_user.nil?
+            - link :front, :index do
+              %li= link_to "Aðalsíða", root_path
+            - link :torrents, :index do
+              %li= link_to "Torrent", torrents_path
+            - link :torrents, :create do
+              %li= link_to "Deila", new_torrent_path
+            - link :forums, :index do
+              %li= link_to "Spjallborð", forums_path
+            %li= link_to "Eftirspurnir", "#"
+            %li= link_to "Prófíll", profile_path
+            %li= link_to "Hjálp", "/help"
+            %li= link_to "Reglur", "/rules"
+          - else
+            %li= link_to "Innskráning", auth_users_path
+            %li= link_to "Nýskráning", new_user_path
+            %li= link_to "Hjálp", "/help"
+            %li= link_to "Reglur", "/rules"
     - unless current_user.nil?
       #status
         .right
