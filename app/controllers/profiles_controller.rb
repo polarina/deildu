@@ -10,6 +10,7 @@ class ProfilesController < ApplicationController
     when "basic" then
       @user.update_attributes params[:user]
       if @user.valid?
+        flash[:notice] = "Prófíll uppfærður."
         redirect_to profile_path
       else
         render 'show'
