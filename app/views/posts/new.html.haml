@@ -1,1 +1,7 @@
 = render "form"
+
+.section
+  %h2 Síðustu póstar
+  
+  - @recent_posts.each do |post|
+    - message :user => post.user, :created_at => post.created_at, :content => post
