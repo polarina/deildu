@@ -32,6 +32,8 @@
       #status
         .right
           %ul
+            - link :users, :index do
+              %li= link_to "Notendalisti", users_path
             - link :bans, :index do
               %li= link_to "Bönn", bans_path
             - link :reports, :index do
