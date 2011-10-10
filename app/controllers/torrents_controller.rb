@@ -29,6 +29,7 @@ class TorrentsController < ApplicationController
       @torrents = [ ]
       @torrents = Torrent.overview.where(:id => ids).order("idx(array#{ids.inspect}, torrents.id) ASC") unless ids.empty?
     else
+      @by_created_at = true
       @torrents = Torrent.overview.order{created_at.desc}
     end
   end

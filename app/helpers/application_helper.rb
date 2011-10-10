@@ -49,7 +49,7 @@ module ApplicationHelper
     end
   end
   
-  def torrent_overview(torrent, options = { })
+  def torrent_overview(torrents, options = { })
     c = 0
     
     haml_tag :table do
@@ -68,33 +68,43 @@ module ApplicationHelper
       end
       
       haml_tag :tbody do
-        torrent.each do |t|
+        last_torrent = nil
+        
+        torrents.each do |t|
           category = Category.new
           category.id = t.category_id
           
+          if options[:show_created_header] and (last_torrent.nil? or last_torrent.created_at.to_date != t.created_at.to_date)
+            haml_tag :tr do
+              haml_tag :th, "Sent inn #{t.created_at.to_date}", :colspan => c
+            end
+            
+            last_torrent = t
+          end
+          
           haml_tag :tr do
-            haml_tag :th, image_tag(category.image_path, :size => category.image_size, :alt => t.category_title), :class => :nopad
-            haml_tag :th, link_to(t.title, t)
-            haml_tag :th, link_to(image_tag("download.png", :alt => "Download"), torrent_path(t, :format => :torrent)) unless options[:download] == false
-            haml_tag :th, (t.fyles_count.to_i == 0 ? 1 : t.fyles_count)
-            haml_tag :th, t.comments_count
-            haml_tag :th, t.created_at, :class => :nowrap unless options[:created_at] == false
-            haml_tag :th, number_to_human_size(t.size), :class => :nowrap
-            haml_tag :th, "?"
-            haml_tag :th, t.seeders_count
-            haml_tag :th, t.leechers_count
+            haml_tag :td, image_tag(category.image_path, :size => category.image_size, :alt => t.category_title), :class => :nopad
+            haml_tag :td, link_to(t.title, t)
+            haml_tag :td, link_to(image_tag("download.png", :alt => "Download"), torrent_path(t, :format => :torrent)) unless options[:download] == false
+            haml_tag :td, (t.fyles_count.to_i == 0 ? 1 : t.fyles_count)
+            haml_tag :td, t.comments_count
+            haml_tag :td, t.created_at, :class => :nowrap unless options[:created_at] == false
+            haml_tag :td, number_to_human_size(t.size), :class => :nowrap
+            haml_tag :td, "?"
+            haml_tag :td, t.seeders_count
+            haml_tag :td, t.leechers_count
             
             unless options[:user] == false
               if t.anonymous
-                haml_tag :th, "Nafnlaust", :class => :italic
+                haml_tag :td, "Nafnlaust", :class => :italic
               else
-                haml_tag :th, link_to(t.username, user_path(t.username))
+                haml_tag :td, link_to(t.username, user_path(t.username))
               end
             end
           end
         end
         
-        if torrent.empty? and not options[:empty_message].nil?
+        if torrents.empty? and not options[:empty_message].nil?
           haml_tag :tr do
             haml_tag :td, options[:empty_message], :colspan => c, :class => :notice
           end
