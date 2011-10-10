@@ -121,7 +121,10 @@ class User < ActiveRecord::Base
         },
         "torrents" => {
           "create" => true,
-          "destroy" => Proc.new { Torrent.find(params[:id]).user == self },
+          "destroy" => Proc.new do
+            torrent = Torrent.find params[:id]
+            torrent.user_id == self.id and torrent.created_at > 3.hours.ago
+          end,
           "index" => true,
           "show" => true,
           "update" => Proc.new { Torrent.find(params[:id]).user == self },

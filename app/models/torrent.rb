@@ -1,7 +1,7 @@
 class Torrent < ActiveRecord::Base
-  has_many :comments
-  has_many :fyles
-  has_many :peers
+  has_many :comments, :dependent => :destroy
+  has_many :fyles, :dependent => :destroy
+  has_many :peers, :dependent => :destroy
   
   belongs_to :category
   belongs_to :user

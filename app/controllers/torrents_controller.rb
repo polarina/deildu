@@ -16,6 +16,14 @@ class TorrentsController < ApplicationController
     respond_with @torrent
   end
   
+  def destroy
+    @torrent = Torrent.find params[:id]
+    @torrent.destroy
+    
+    flash[:notice] = "Torrenti hefur verið eytt."
+    respond_with @torrent
+  end
+  
   def update
     @torrent = Torrent.find(params[:id])
     @torrent.update_attributes(params[:torrent])
