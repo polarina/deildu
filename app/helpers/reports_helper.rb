@@ -26,7 +26,7 @@ module ReportsHelper
         end
       when "Torrent" then
         if report.victim
-          link_to "torrent ##{report.victim_id}", torrent_path(report.id)
+          link_to "torrent ##{report.victim_id}", report.victim
         else
           "comment ##{report.victim_id}"
         end
