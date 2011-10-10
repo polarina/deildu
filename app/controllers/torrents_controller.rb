@@ -43,8 +43,18 @@ class TorrentsController < ApplicationController
   end
   
   def show
+    fyles_limit = 3
+    
     @torrent = Torrent.find(params[:id])
     @comments = Comment.includes(:user).order("created_at desc").find_all_by_torrent_id(@torrent.id)
+    
+    if params[:files]
+      @fyles = @torrent.fyles.oby_path.all
+    else
+      @fyles = @torrent.fyles.oby_path.limit(fyles_limit).all
+      @remaining_fyles = @torrent.fyles.count - fyles_limit
+      @remaining_fyles = nil if @remaining_fyles < 0
+    end
     
     tid = @torrent.id
     @number_of_seeders = Peer.where{(torrent_id == tid) & (left == 0)}.count

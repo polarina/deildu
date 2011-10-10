@@ -17,7 +17,7 @@
     %dd= @torrent.infohash_hex
     %dt Lýsing
     %dd.markdown!= find_and_preserve(markdown(@torrent.description))
-    - unless @torrent.fyles.blank?
+    - unless @fyles.blank?
       %dt Skrár
       %dd
         %table
@@ -26,10 +26,15 @@
               %th Stærð
               %th.expand Skráarnafn
           %tbody
-            - @torrent.fyles.oby_path.each do |fyle|
+            - @fyles.each do |fyle|
               %tr
                 %td.nowrap= number_to_human_size(fyle.size)
                 %td= fyle.path
+          - if @remaining_fyles
+            %tfoot
+              %tr
+                %td
+                %td= link_to "#{@remaining_fyles} fleiri skrár...", torrent_path(@torrent, :files => "all")
     - else
       %dt Skrá
       %dd= @torrent.info_name
