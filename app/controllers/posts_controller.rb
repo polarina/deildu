@@ -7,6 +7,7 @@ class PostsController < ApplicationController
     @post = @topic.posts.new params[:post]
     @post.user = current_user
     @post.save
+    @recent_posts = @topic.posts.order{created_at.desc}.includes(:user).limit(3)
     respond_with @forum, @topic, @post, :location => forum_topic_path(@forum, @topic)
   end
   
