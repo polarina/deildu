@@ -38,6 +38,8 @@
       %dd.italic Nafnlaust
     - else
       %dd= link_to @torrent.user.username, @torrent.user
+    %dt Jafnokar
+    %dd #{@number_of_seeders} deilendur, #{@number_of_leechers} sækjendur = #{@number_of_seeders + @number_of_leechers} jafnokar
 
 .section
   %ul.controls

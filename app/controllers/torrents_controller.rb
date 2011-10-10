@@ -38,6 +38,10 @@ class TorrentsController < ApplicationController
     @torrent = Torrent.find(params[:id])
     @comments = Comment.includes(:user).order("created_at desc").find_all_by_torrent_id(@torrent.id)
     
+    tid = @torrent.id
+    @number_of_seeders = Peer.where{(torrent_id == tid) & (left == 0)}.count
+    @number_of_leechers = Peer.where{(torrent_id == tid) & (left != 0)}.count
+    
     respond_to do |format|
       format.html
       format.torrent { render :text => @torrent.torrent_file(current_user, request).bencode }
