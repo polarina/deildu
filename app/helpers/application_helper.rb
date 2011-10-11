@@ -84,8 +84,8 @@ module ApplicationHelper
           
           haml_tag :tr do
             haml_tag :td, image_tag(category.image_path, :size => category.image_size, :alt => t.category_title), :class => :nopad
-            haml_tag :td, torrent_path(t.id) #link_to(t.title, t)
-            haml_tag :td, "a"#link_to(image_tag("download.png", :alt => "Download"), torrent_path(t, :format => :torrent)) unless options[:download] == false
+            haml_tag :td, link_to(t.title, t)
+            haml_tag :td, link_to(image_tag("download.png", :alt => "Download"), torrent_path(t, :format => :torrent)) unless options[:download] == false
             haml_tag :td, (t.fyles_count.to_i == 0 ? 1 : t.fyles_count)
             haml_tag :td, t.comments_count
             haml_tag :td, t.created_at, :class => :nowrap unless options[:created_at] == false
@@ -98,7 +98,7 @@ module ApplicationHelper
               if t.anonymous
                 haml_tag :td, "Nafnlaust", :class => :italic
               else
-                haml_tag :td, user_path(t.username) #(t.username, user_path(t.username))
+                haml_tag :td, link_to(t.username, user_path(t.username))
               end
             end
           end

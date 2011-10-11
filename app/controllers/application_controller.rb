@@ -5,7 +5,6 @@ class ApplicationController < ActionController::Base
   before_filter :is_forbidden
   before_filter :requires_authentication
   before_filter :requires_authorization
-  before_filter :update_visited_at
   
   private
 
@@ -37,13 +36,6 @@ class ApplicationController < ActionController::Base
     
     unless current_user.has_permission_to?(params)
       render 'public/403', :layout => false, :status => :forbidden
-    end
-  end
-  
-  def update_visited_at
-    if current_user and current_user.visited_at < 5.minutes.ago
-      current_user.visited_at = Time.now.utc if current_user.visited_at < 5.minutes.ago
-      current_user.save
     end
   end
 end

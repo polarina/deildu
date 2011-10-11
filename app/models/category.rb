@@ -18,8 +18,4 @@ class Category < ActiveRecord::Base
   def image_size
     "63x36"
   end
-  
-  def self.image_size
-    "63x36"
-  end
 end

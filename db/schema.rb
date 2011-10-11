@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111011200600) do
+ActiveRecord::Schema.define(:version => 20111008214300) do
 
   create_table "bans", :force => true do |t|
     t.datetime "created_at",                :null => false
@@ -206,22 +206,20 @@ ActiveRecord::Schema.define(:version => 20111011200600) do
   add_index "torrents", ["user_id"], :name => "index_torrents_on_user_id"
 
   create_table "users", :force => true do |t|
-    t.datetime "created_at",                                                                                        :null => false
-    t.datetime "updated_at",                                                                                        :null => false
-    t.string   "username",                                                                                          :null => false
-    t.string   "password_digest",                                                                                   :null => false
-    t.string   "email",            :limit => 320,                                                                   :null => false
+    t.datetime "created_at",                                                                       :null => false
+    t.datetime "updated_at",                                                                       :null => false
+    t.string   "username",                                                                         :null => false
+    t.string   "password_digest",                                                                  :null => false
+    t.string   "email",            :limit => 320,                                                  :null => false
     t.integer  "inviter_id"
-    t.string   "key",                                                                                               :null => false
-    t.decimal  "kredits",                         :precision => 45, :scale => 0, :default => 0,                     :null => false
-    t.boolean  "allowed",                                                        :default => true,                  :null => false
-    t.integer  "permission_level",                                               :default => 0,                     :null => false
-    t.boolean  "show_avatars",                                                   :default => true,                  :null => false
-    t.datetime "visited_at",                                                     :default => '2011-10-11 20:44:30', :null => false
+    t.string   "key",                                                                              :null => false
+    t.decimal  "kredits",                         :precision => 45, :scale => 0, :default => 0,    :null => false
+    t.boolean  "allowed",                                                        :default => true, :null => false
+    t.integer  "permission_level",                                               :default => 0,    :null => false
+    t.boolean  "show_avatars",                                                   :default => true, :null => false
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["username"], :name => "index_users_on_username", :unique => true
-  add_index "users", ["visited_at"], :name => "index_users_on_visited_at"
 
 end
