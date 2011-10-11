@@ -14,22 +14,9 @@
     %p Engar fréttir
 
 .section
-  %h2 Topp 5 torrent
-  %table
-    %thead
-      %tr
-        %th.center Flokkur
-        %th.expand Heiti
-        %th Deilendur
-        %th Skráarsugur
-    %tbody
-      %tr
-        %td.nopad= image_tag("categories/dvd-r.png")
-        %td Thor.2011.BDRip.XviD-Larceny
-        %td 781
-        %td 3
-      %tr
-        %td.nopad= image_tag("categories/dvd-r.png")
-        %td Thor.2011.BDRip.XviD-Larceny
-        %td 781
-        %td 3
+  %h2 Virkir notendur (#{@active_users.size})
+  
+  .markdown
+    %p
+      - @active_users.each do |user|
+        #{link_to user.username, user},
