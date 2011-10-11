@@ -53,7 +53,7 @@ class TorrentsController < ApplicationController
     else
       @fyles = @torrent.fyles.oby_path.limit(fyles_limit).all
       @remaining_fyles = @torrent.fyles.count - fyles_limit
-      @remaining_fyles = nil if @remaining_fyles < 0
+      @remaining_fyles = nil if @remaining_fyles <= 0
     end
     
     tid = @torrent.id
