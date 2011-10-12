@@ -116,7 +116,10 @@ class User < ActiveRecord::Base
         },
         "topics" => {
           "create" => true,
-          "destroy" => Proc.new { Topic.find(params[:id]).user == self },
+          "destroy" => Proc.new do
+            topic = Topic.find params[:id]
+            topic.user_id == self.id and topic.posts.limit(2).count <= 1
+          end,
           "show" => true,
         },
         "torrents" => {
