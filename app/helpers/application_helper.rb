@@ -2,8 +2,8 @@
 
 module ApplicationHelper
   def markdown(text)
-    options = [:hard_wrap, :filter_html, :autolink, :no_intraemphasis, :fenced_code, :gh_blockcode]
-    find_and_preserve(Redcarpet.new(text, *options).to_html)
+    options = {:autolink => true, :no_intra_emphasis => true, :fenced_code_blocks => true}
+    find_and_preserve(Redcarpet::Markdown.new(Redcarpet::Render::HTML.new({:hard_wrap => true, :filter_html => true}), options).render(text))
   end
   
   def link(controller, action, params = { }, &block)

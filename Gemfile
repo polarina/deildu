@@ -12,7 +12,7 @@ gem 'dynamic_form'
 gem 'bencode'
 gem 'squeel'
 gem 'encryptor'
-gem 'redcarpet'
+gem 'redcarpet', :git => "git://github.com/tanoku/redcarpet.git"
 gem 'gravtastic'
 gem 'thinking-sphinx'
 
