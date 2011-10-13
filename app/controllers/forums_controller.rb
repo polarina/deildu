@@ -26,7 +26,7 @@ class ForumsController < ApplicationController
   
   def show
     @forum = Forum.find params[:id]
-    @topics = Topic.overview(current_user).where(:forum_id => @forum.id)
+    @topics = Topic.overview(current_user).where(:forum_id => @forum.id).page(params[:page])
     respond_with @forum
   end
   

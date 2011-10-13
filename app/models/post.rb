@@ -1,4 +1,6 @@
 class Post < ActiveRecord::Base
+  self.per_page = 10
+  
   belongs_to :topic
   belongs_to :user
   

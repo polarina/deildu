@@ -1,4 +1,6 @@
 class Topic < ActiveRecord::Base
+  self.per_page = 10
+  
   belongs_to :forum
   belongs_to :user
   has_many :posts, :dependent => :destroy

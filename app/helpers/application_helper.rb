@@ -111,5 +111,7 @@ module ApplicationHelper
         end
       end
     end
+    
+    haml_tag :div, will_paginate(torrents), :style => "border-bottom: 1px solid grey" if torrents.try(:total_pages)
   end
 end

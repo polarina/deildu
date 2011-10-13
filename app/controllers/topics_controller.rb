@@ -38,10 +38,22 @@ class TopicsController < ApplicationController
   def show
     @forum = Forum.find params[:forum_id]
     @topic = @forum.topics.find params[:id]
-    @posts = @topic.posts.order{created_at.asc}.includes(:user)
+    
+    if params[:page] =~ /^p([0-9]+)$/ and $1
+      post_id = $1
+      post = Post.select{created_at}.where{id == post_id}
+      count = @topic.posts.where("created_at < (#{post.to_sql})").count
+      params[:page] = count / Post.per_page + 1
+    end
+    
+    @posts = @topic.posts.order{created_at.asc}.includes(:user).page(params[:page])
     @new_post = @topic.posts.new
     
-    ReadTopic.find_or_initialize_by_user_id_and_topic_id(current_user.id, @topic.id).update_attributes!(:post_id => @posts.last.id)
+    last_post = ReadTopic.find_or_initialize_by_user_id_and_topic_id(current_user.id, @topic.id)
+    
+    if last_post.post and @posts.last
+      last_post.update_attributes!(:post_id => @posts.last.id) if last_post.post.created_at < @posts.last.created_at
+    end
     
     respond_with @forum, @topic
   end

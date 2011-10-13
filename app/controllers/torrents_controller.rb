@@ -35,10 +35,10 @@ class TorrentsController < ApplicationController
       ids = Torrent.search_for_ids params[:search], :field_weights => { :title => 7, :description => 5, :category => 2 }
       
       @torrents = [ ]
-      @torrents = Torrent.overview.where(:id => ids).order("idx(array#{ids.inspect}, torrents.id) ASC") unless ids.empty?
+      @torrents = Torrent.overview.where(:id => ids).order("idx(array#{ids.inspect}, torrents.id) ASC").page(params[:page]) unless ids.empty?
     else
       @by_created_at = true
-      @torrents = Torrent.overview.order{created_at.desc}
+      @torrents = Torrent.overview.order{created_at.desc}.page(params[:page])
     end
   end
   

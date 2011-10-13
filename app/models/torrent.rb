@@ -1,4 +1,6 @@
 class Torrent < ActiveRecord::Base
+  self.per_page = 10
+  
   has_many :comments, :dependent => :destroy
   has_many :fyles, :dependent => :destroy
   has_many :peers, :dependent => :destroy

@@ -24,7 +24,7 @@
           %td= forum.posts_count
           %td.nowrap
             - if forum.last_subject
-              = link_to forum.last_subject, forum_topic_path(forum, forum.last_topic_id)
+              = link_to forum.last_subject, forum_topic_path(forum, forum.last_topic_id, :page => "p#{forum.last_post_id}", :anchor => "post#{forum.last_post_id}")
               af
               = link_to forum.last_username, user_path(forum.last_username)
               %br
