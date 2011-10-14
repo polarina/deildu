@@ -10,7 +10,7 @@ class PostsController < ApplicationController
     @post.user = current_user
     @post.save
     @recent_posts = @topic.posts.order{created_at.desc}.includes(:user).limit(3)
-    respond_with @forum, @topic, @post, :location => forum_topic_path(@forum, @topic)
+    respond_with @forum, @topic, @post, :location => forum_topic_path(@forum, @topic, :page => "p#{@post.id}", :anchor => "post#{@post.id}")
   end
   
   def destroy
@@ -55,6 +55,6 @@ class PostsController < ApplicationController
     @topic = @forum.topics.find params[:topic_id]
     @post = @topic.posts.find params[:id]
     @post.update_attributes params[:post]
-    respond_with @forum, @topic, @post, :location => forum_topic_path(@forum, @topic)
+    respond_with @forum, @topic, @post, :location => forum_topic_path(@forum, @topic, :page => "p#{@post.id}", :anchor => "post#{@post.id}")
   end
 end
