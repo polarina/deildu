@@ -51,8 +51,8 @@ class TopicsController < ApplicationController
     
     last_post = ReadTopic.find_or_initialize_by_user_id_and_topic_id(current_user.id, @topic.id)
     
-    if last_post.post and @posts.last
-      last_post.update_attributes!(:post_id => @posts.last.id) if last_post.post.created_at < @posts.last.created_at
+    if @posts.last
+      last_post.update_attributes!(:post_id => @posts.last.id) unless last_post.post and last_post.post.created_at > @posts.last.created_at
     end
     
     respond_with @forum, @topic
