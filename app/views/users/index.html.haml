@@ -15,5 +15,6 @@
           %td.nowrap!= pretty_kredits user.kredits
       - if @users.empty?
         %tr
-          %td.notice{:colspan => 2}
+          %td.notice{:colspan => 3}
             Engir notendur.
+  .table= will_paginate @users

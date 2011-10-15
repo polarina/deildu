@@ -1,6 +1,8 @@
 class User < ActiveRecord::Base
   include Gravtastic
   
+  self.per_page = 20
+  
   has_secure_password
   gravtastic :size => 150, :rating => "X", :default => :monsterid
   

@@ -21,7 +21,7 @@ class UsersController < ApplicationController
   end
   
   def index
-    respond_with(@users = User.order(:username))
+    respond_with(@users = User.order(:username).page(params[:page]))
   end
   
   def show
