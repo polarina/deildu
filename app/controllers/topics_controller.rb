@@ -80,10 +80,11 @@ class TopicsController < ApplicationController
     @subject = @topic.subject
     
     success = ActiveRecord::Base.transaction do
-      success = @topic.update_attributes(params[:topic]) and @post.update_attributes(params[:topic][:post])
+      topic_success = @topic.update_attributes(params[:topic])
+      post_success = @post.update_attributes(params[:topic][:post])
       
-      raise ActiveRecord::Rollback unless success
-      success
+      raise ActiveRecord::Rollback unless topic_success and post_success
+      topic_success and post_success
     end
     
     respond_to do |format|
