@@ -32,6 +32,7 @@ module ApplicationHelper
     content = options[:content]
     avatar = options[:avatar]
     avatar = false unless current_user.show_avatars
+    avatar = false if options[:anonymous] == true
     
     haml_tag :div, :class => :message do
       haml_tag :a, :name => content.class.to_s.downcase + content.id.to_s
@@ -40,7 +41,12 @@ module ApplicationHelper
         haml_tag :ul, :class => :controls do yield end if block
         
         haml_tag :ul do
-          haml_tag :li, link_to(user.username, user)
+          if options[:anonymous] == true
+            haml_tag :li, "Innsendandi"
+          else
+            haml_tag :li, link_to(user.username, user)
+          end
+          
           haml_tag :li, created_at
         end
       end

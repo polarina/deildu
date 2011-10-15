@@ -36,7 +36,9 @@ module ReportsHelper
   def render_victim(victim)
     case victim.class.to_s
       when "Comment" then
-        message :user => victim.user, :created_at => victim.created_at, :content => victim
+        torrent = victim.torrent
+        
+        message :user => victim.user, :created_at => victim.created_at, :content => victim, :anonymous => (torrent.anonymous and victim.user_id == torrent.user_id)
       when "Post" then
         message :user => victim.user, :created_at => victim.created_at, :content => victim
       when "Torrent" then

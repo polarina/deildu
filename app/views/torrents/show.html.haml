@@ -53,7 +53,7 @@
   %h2 Athugasemdir
   
   - @comments.each do |comment|
-    - message :user => comment.user, :created_at => comment.created_at, :content => comment do
+    - message :user => comment.user, :created_at => comment.created_at, :content => comment, :anonymous => (@torrent.anonymous and comment.user_id == @torrent.user_id) do
       - link :reports, :new, :comment => comment.id do
         %li= link_to "Tilkynna", new_report_path(:comment => comment.id)
       - link :comments, :edit, :id => comment.id do
