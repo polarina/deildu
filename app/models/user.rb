@@ -95,17 +95,24 @@ class User < ActiveRecord::Base
           "page" => true,
         },
         "posts" => {
-          "create" => true,
+          "create" => Proc.new do
+            topic = inst Topic, params[:topic_id]
+            not topic.locked
+          end,
           "destroy" => Proc.new do
+            topic = inst Topic, params[:topic_id]
             post = inst Post, params[:id]
             post_topic_id = post.topic_id
             
             oldest = Post.limit(1).select{id}.where{topic_id == post_topic_id}.order{created_at.asc}
             newest = Post.limit(1).select{id}.where{topic_id == post_topic_id}.order{created_at.desc}
             
-            post.user_id == self.id and newest.first.id == post.id and oldest.first.id != post.id
+            (not topic.locked) and post.user_id == self.id and newest.first.id == post.id and oldest.first.id != post.id
           end,
-          "update" => Proc.new { inst(Post, params[:id]).user_id == self.id },
+          "update" => Proc.new do
+            topic = inst Topic, params[:topic_id]
+            (not topic.locked) and inst(Post, params[:id]).user_id == self.id
+          end,
         },
         "profiles" => {
           "show" => true,
@@ -118,15 +125,22 @@ class User < ActiveRecord::Base
           "create" => true,
           "destroy" => Proc.new do
             topic = Topic.find params[:id]
-            topic.user_id == self.id and topic.posts.limit(2).count <= 1
+            (not topic.locked) and topic.user_id == self.id and topic.posts.limit(2).count <= 1
           end,
           "show" => true,
           "update" => Proc.new do
-            if params[:topic] and params[:topic][:sticky]
-              next false unless params[:topic][:sticky] == "false"
+            if params[:topic]
+              if params[:topic][:sticky]
+                next false unless params[:topic][:sticky] == "false"
+              end
+              
+              if params[:topic][:locked]
+                next false unless params[:topic][:locked] == "false"
+              end
             end
             
-            inst(Topic, params[:id]).user_id == self.id
+            topic = inst(Topic, params[:id])
+            (not topic.locked) and topic.user_id == self.id
           end,
         },
         "torrents" => {
@@ -175,6 +189,7 @@ class User < ActiveRecord::Base
           "update" => true,
         },
         "posts" => {
+          "create" => true,
           "destroy" => Proc.new do
             post = inst Post, params[:id]
             post_topic_id = post.topic_id

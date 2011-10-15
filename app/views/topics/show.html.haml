@@ -15,14 +15,14 @@
         - message :user => post.user, :created_at => post.created_at, :content => post do
           - link :reports, :new, :post => post.id do
             %li= link_to "Tilkynna", new_report_path(:post => post.id)
-          - link :posts, :new, :quote => post.id do
+          - link :posts, :new, :topic_id => @topic, :quote => post.id do
             %li= link_to "Tilvitna", new_forum_topic_post_path(@forum, @topic, :quote => post.id)
-          - link :posts, :edit, :id => post do
+          - link :posts, :edit, :topic_id => @topic, :id => post do
             - if post == @first_post
               %li= link_to "Breyta", edit_forum_topic_path(@forum, @topic)
             - else
               %li= link_to "Breyta", edit_forum_topic_post_path(@forum, @topic, post)
-          - link :posts, :destroy, :id => post do
+          - link :posts, :destroy, :topic_id => @topic, :id => post do
             %li= link_to "Eyða", forum_topic_post_path(@forum, @topic, post), :confirm => "Ertu viss um að þú viljir eyða þessu innleggi?", :method => :delete
   
   .section.headrepeat

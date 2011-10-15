@@ -26,5 +26,10 @@
           = f.label :sticky, "Sticky"
           = f.select :sticky, [["Já", true], ["Nei", false]]
       
+      - link :topics, :update, :id => @topic, :topic => { :locked => "true" } do
+        %div
+          = f.label :locked, "Læst"
+          = f.select :locked, [["Já", true], ["Nei", false]]
+      
       %div
         = f.submit "Vista"

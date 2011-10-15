@@ -40,7 +40,11 @@ module ForumsHelper
       haml_tag :tbody do
         topics.each do |topic|
           haml_tag :tr do
-            haml_tag :td, (topic.last_post_read == topic.last_post_id ? "Já" : "Nei")
+            haml_tag :td do
+              haml_concat (topic.last_post_read == topic.last_post_id ? "Já" : "Nei")
+              haml_concat ", læst" if topic.locked
+            end
+            
             haml_tag :td, (link_to topic.subject, forum_topic_path(@forum, topic))
             haml_tag :td, topic.posts_count
             haml_tag :td, (link_to topic.username, user_path(topic.username))

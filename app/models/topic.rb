@@ -6,7 +6,8 @@ class Topic < ActiveRecord::Base
   has_many :posts, :dependent => :destroy
   
   attr_accessible :subject,
-                  :sticky
+                  :sticky,
+                  :locked
   
   validates :subject,
     :length => { :within => 5..48 }
@@ -28,6 +29,7 @@ class Topic < ActiveRecord::Base
         id,
         forum_id,
         subject,
+        locked,
         user.username.as(username),
         t1.count.as(posts_count),
         t2.post_id.as(last_post_read),

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111014204000) do
+ActiveRecord::Schema.define(:version => 20111015223200) do
 
   create_table "bans", :force => true do |t|
     t.datetime "created_at",                :null => false
@@ -182,6 +182,7 @@ ActiveRecord::Schema.define(:version => 20111014204000) do
     t.integer  "user_id",                       :null => false
     t.string   "subject",                       :null => false
     t.boolean  "sticky",     :default => false, :null => false
+    t.boolean  "locked",     :default => false, :null => false
   end
 
   add_index "topics", ["forum_id", "sticky"], :name => "index_topics_on_forum_id_and_sticky"
