@@ -8,7 +8,7 @@
     %dt Skráð
     %dd= @user.created_at
     %dt Kredits
-    %dd= pretty_kredits @user.kredits
+    %dd!= pretty_kredits @user.kredits
     %dt Avatar
     %dd= gravatar_image(@user, :class => :border)
     - if @user.inviter

@@ -51,7 +51,9 @@
               = link_to current_user.username, current_user
             %li= link_to "Boðslyklar", invitations_path
           %ul
-            %li Kredits: #{pretty_kredits current_user.kredits}
+            %li
+              Kredits:
+              != pretty_kredits current_user.kredits
     - if flash[:notice]
       #notification= flash[:notice]
     #content

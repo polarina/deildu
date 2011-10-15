@@ -13,10 +13,12 @@ module ApplicationHelper
   end
   
   def pretty_kredits(kredits)
-    if kredits < 0
-      "-" + number_to_human_size(kredits.abs)
+    if kredits == 0
+      number_to_human_size(kredits.abs)
+    elsif kredits < 0
+      "<span style=\"color: #8b0000;\">-" + number_to_human_size(kredits.abs) + "</span>"
     else
-      number_to_human_size(kredits)
+      "<span style=\"color: #006400;\">+" + number_to_human_size(kredits) + "</span>"
     end
   end
   
