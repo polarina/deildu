@@ -8,29 +8,12 @@
       %li= link_to "Eyða", forum_path(@forum), :confirm => "Ertu viss um að þú viljir eyða þessum spjallflokki?", :method => :delete
   %h2= @forum.title
   
-  %table
-    %thead
-      %th Lesið
-      %th.expand Spjallþráður
-      %th Póstar
-      %th Höfundur
-      %th.nowrap Síðasta innleg
-    %tbody
-      - @topics.each do |topic|
-        %tr
-          %td= topic.last_post_read == topic.last_post_id ? "Já" : "Nei"
-          %td= link_to topic.subject, forum_topic_path(@forum, topic)
-          %td= topic.posts_count
-          %td= link_to topic.username, user_path(topic.username)
-          %td.nowrap
-            - if topic.last_username
-              Eftir
-              = link_to topic.last_username, user_path(topic.last_username)
-              %br
-              = topic.last_created_at.to_time
-            - else
-              Engir póstar.
-      - if @topics.empty?
-        %tr
-          %td.notice{:colspan => 5} Engir spjallþræðir.
+  - unless @stickies.empty?
+    - forums_overview @stickies, :sticky => true
+    
+    .section
+      - forums_overview @topics
+  - else
+    - forums_overview @topics
+  
   .table= will_paginate @topics

@@ -35,6 +35,13 @@ class TopicsController < ApplicationController
     respond_with @forum, @topic
   end
   
+  def edit
+    @forum = Forum.find params[:forum_id]
+    @topic = @forum.topics.find params[:id]
+    @post = @topic.posts.order{created_at.asc}.first
+    respond_with @forum, @topic
+  end
+  
   def show
     @forum = Forum.find params[:forum_id]
     @topic = @forum.topics.find params[:id]
@@ -46,8 +53,8 @@ class TopicsController < ApplicationController
       params[:page] = count / Post.per_page + 1
     end
     
+    @first_post = @topic.posts.order{created_at.asc}.first
     @posts = @topic.posts.order{created_at.asc}.includes(:user).page(params[:page])
-    @new_post = @topic.posts.new
     
     last_post = ReadTopic.find_or_initialize_by_user_id_and_topic_id(current_user.id, @topic.id)
     
@@ -63,5 +70,28 @@ class TopicsController < ApplicationController
     @topic = @forum.topics.new
     @post = @topic.posts.new
     respond_with @forum, @topic
+  end
+  
+  def update
+    @forum = Forum.find params[:forum_id]
+    @topic = @forum.topics.find params[:id]
+    @post = @topic.posts.order{created_at.asc}.first
+    
+    @subject = @topic.subject
+    
+    success = ActiveRecord::Base.transaction do
+      success = @topic.update_attributes(params[:topic]) and @post.update_attributes(params[:topic][:post])
+      
+      raise ActiveRecord::Rollback unless success
+      success
+    end
+    
+    respond_to do |format|
+      if success
+        format.html { redirect_to forum_topic_path(@forum, @topic) }
+      else
+        format.html { render 'edit' }
+      end
+    end
   end
 end

@@ -1,0 +1,30 @@
+.section
+  %h2
+    = link_to @forum.title, @forum
+    &gt;
+    - if @topic.new_record?
+      Nýr spjallþráður
+    - else
+      = link_to @topic.subject_was, forum_topic_path(@forum, @topic)
+      &gt; Breyta innlegg
+  
+  = form_for [@forum, @topic] do |f|
+    = f.fields_for @post do |g|
+      = f.error_messages
+      = g.error_messages
+      
+      %div
+        = f.label :subject, "Efni"
+        = f.text_field :subject
+      
+      %div
+        = g.label :post, "Innlegg"
+        = g.text_area :post, :size => "10x12"
+      
+      - link :topics, :update, :id => @topic, :topic => { :sticky => "true" } do
+        %div
+          = f.label :sticky, "Sticky"
+          = f.select :sticky, [["Já", true], ["Nei", false]]
+      
+      %div
+        = f.submit "Vista"

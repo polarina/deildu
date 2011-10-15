@@ -79,7 +79,7 @@ class User < ActiveRecord::Base
         },
         "messages" => {
           "create" => Proc.new do
-            return true unless params[:reply]
+            next true unless params[:reply]
             
             msg = Message.find params[:reply]
             (not msg.sender_deleted and msg.sender_id == self.id) or (not msg.receiver_deleted and msg.receiver_id == self.id)
@@ -121,6 +121,13 @@ class User < ActiveRecord::Base
             topic.user_id == self.id and topic.posts.limit(2).count <= 1
           end,
           "show" => true,
+          "update" => Proc.new do
+            if params[:topic] and params[:topic][:sticky]
+              next false unless params[:topic][:sticky] == "false"
+            end
+            
+            inst(Topic, params[:id]).user_id == self.id
+          end,
         },
         "torrents" => {
           "create" => true,
@@ -183,6 +190,7 @@ class User < ActiveRecord::Base
         },
         "topics" => {
           "destroy" => true,
+          "update" => true,
         },
         "torrents" => {
           "destroy" => true,

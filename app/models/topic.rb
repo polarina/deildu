@@ -5,7 +5,8 @@ class Topic < ActiveRecord::Base
   belongs_to :user
   has_many :posts, :dependent => :destroy
   
-  attr_accessible :subject
+  attr_accessible :subject,
+                  :sticky
   
   validates :subject,
     :length => { :within => 5..48 }

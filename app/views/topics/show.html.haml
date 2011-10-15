@@ -18,7 +18,10 @@
           - link :posts, :new, :quote => post.id do
             %li= link_to "Tilvitna", new_forum_topic_post_path(@forum, @topic, :quote => post.id)
           - link :posts, :edit, :id => post do
-            %li= link_to "Breyta", edit_forum_topic_post_path(@forum, @topic, post)
+            - if post == @first_post
+              %li= link_to "Breyta", edit_forum_topic_path(@forum, @topic)
+            - else
+              %li= link_to "Breyta", edit_forum_topic_post_path(@forum, @topic, post)
           - link :posts, :destroy, :id => post do
             %li= link_to "Eyða", forum_topic_post_path(@forum, @topic, post), :confirm => "Ertu viss um að þú viljir eyða þessu innleggi?", :method => :delete
   

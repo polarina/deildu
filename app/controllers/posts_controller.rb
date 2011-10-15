@@ -25,6 +25,7 @@ class PostsController < ApplicationController
     @forum = Forum.find params[:forum_id]
     @topic = @forum.topics.find params[:topic_id]
     @post = @topic.posts.find params[:id]
+    
     respond_with @forum, @topic, @post
   end
   
