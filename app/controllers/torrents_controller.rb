@@ -81,7 +81,10 @@ class TorrentsController < ApplicationController
     @peer.destroy and render :text => { }.bencode and return if params[:event] == "stopped"
     
     @peer.update_attributes params
+    
     @peer.ip = request.ip if params[:ip].nil?
+    raise TrackerError, "computer says 'nooo'" unless CheckForIceland.new.is_icelandic? @peer.ip
+    
     @peer.user = key.user
     
     if @peer.save
@@ -105,6 +108,8 @@ class TorrentsController < ApplicationController
   
   def scrape
     key = process_passkey
+    
+    raise TrackerError, "computer says 'nooo'" unless CheckForIceland.new.is_icelandic? request.ip
     
     render :text => {
       "files" => {

@@ -16,6 +16,8 @@ gem 'redcarpet', :git => "git://github.com/tanoku/redcarpet.git"
 gem 'gravtastic'
 gem 'thinking-sphinx'
 gem 'will_paginate'
+gem 'checkforiceland', '~> 0.0.2'
+gem 'memcache-client'
 
 # Gems used only for assets and not required
 # in production environments by default.
