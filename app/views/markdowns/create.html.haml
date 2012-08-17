@@ -1,0 +1,6 @@
+= render "form"
+
+.section
+  %h2 Sýnishorn
+  
+  - message :user => current_user, :created_at => Time.now.utc, :content => @markdown

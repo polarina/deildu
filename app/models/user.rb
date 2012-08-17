@@ -58,6 +58,7 @@ class User < ActiveRecord::Base
     end
     
     permissions = [
+      # Permission level 0
       {
         "blocks" => {
           "create" => Proc.new { User.find_by_username!(params[:user]) != self },
@@ -78,6 +79,10 @@ class User < ActiveRecord::Base
           "create" => true,
           "index" => true,
           "destroy" => true,
+        },
+        "markdowns" => {
+          "create" => true,
+          "show" => true,
         },
         "messages" => {
           "create" => Proc.new do
@@ -160,11 +165,13 @@ class User < ActiveRecord::Base
           "show" => true,
         },
       },
+      # Permission level 1
       {
         "users" => {
           "index" => true,
         },
       },
+      # Permission level 2
       {
         "comments" => {
           "destroy" => true,
@@ -217,6 +224,7 @@ class User < ActiveRecord::Base
           "update" => true,
         },
       },
+      # Permission level 4
       {
         "bans" => {
           "create" => true,
