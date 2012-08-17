@@ -1,0 +1,11 @@
+.section
+  %h2 Markdown Prufa
+  
+  = form_for :markdown, :url => markdown_path do |f|
+    
+    %div
+      = f.label :content, "Markdown"
+      = f.text_area :content, :size => "10x12"
+    
+    %div
+      = f.submit "Prufa"
