@@ -21,6 +21,11 @@
         = g.label :post, "Innlegg"
         = g.text_area :post, :size => "10x12"
       
+      - link :topics, :update, :id => @topic, :topic => { :forum => "true" } do
+        %div
+          = f.label :forum, "Spjallflokkur"
+          = f.select :forum, @forums.collect { |v| [v.title, v.id] }
+      
       - link :topics, :update, :id => @topic, :topic => { :sticky => "true" } do
         %div
           = f.label :sticky, "Sticky"

@@ -36,6 +36,7 @@ class TopicsController < ApplicationController
   end
   
   def edit
+    @forums = Forum.order{ordering.asc}
     @forum = Forum.find params[:forum_id]
     @topic = @forum.topics.find params[:id]
     @post = @topic.posts.order{created_at.asc}.first
@@ -80,6 +81,11 @@ class TopicsController < ApplicationController
     @subject = @topic.subject
     
     success = ActiveRecord::Base.transaction do
+      if params[:topic][:forum] != @forum.id
+        @forum = Forum.find_by_id! params[:topic][:forum]
+        @topic.forum = @forum
+      end
+      
       topic_success = @topic.update_attributes(params[:topic])
       post_success = @post.update_attributes(params[:topic][:post])
       

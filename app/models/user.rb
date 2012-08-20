@@ -137,13 +137,9 @@ class User < ActiveRecord::Base
           "show" => true,
           "update" => Proc.new do
             if params[:topic]
-              if params[:topic][:sticky]
-                next false unless params[:topic][:sticky] == "false"
-              end
-              
-              if params[:topic][:locked]
-                next false unless params[:topic][:locked] == "false"
-              end
+              next false if params[:topic][:forum]
+              next false if params[:topic][:sticky]
+              next false if params[:topic][:locked]
             end
             
             topic = inst(Topic, params[:id])
