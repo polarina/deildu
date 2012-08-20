@@ -4,5 +4,6 @@ class Ban < ActiveRecord::Base
   attr_accessible :address
   
   validates :address,
+    :uniqueness => true,
     :format => { :with => // }
 end
