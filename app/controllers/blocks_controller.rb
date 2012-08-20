@@ -3,7 +3,10 @@ class BlocksController < ApplicationController
   
   def create
     @block = current_user.blocks.create :blocked => User.find_by_username!(params[:user])
-    respond_with @block, :location => blocks_path
+    
+    respond_with @block, :location => blocks_path do |format|
+      format.html { redirect_to blocks_path }
+    end
   end
   
   def destroy

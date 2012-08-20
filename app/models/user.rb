@@ -61,8 +61,16 @@ class User < ActiveRecord::Base
       # Permission level 0
       {
         "blocks" => {
-          "create" => Proc.new { User.find_by_username!(params[:user]) != self },
-          "destroy" => true,
+          "create" => Proc.new do
+            user = User.find_by_username!(params[:user])
+            
+            user != self and not self.blocks.exists?(:blocked_id => user.id)
+          end,
+          "destroy" => Proc.new do
+            user = User.find_by_username!(params[:id])
+            
+            self.blocks.exists?(:blocked_id => user.id)
+          end,
           "index" => true,
         },
         "comments" => {

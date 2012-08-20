@@ -5,6 +5,8 @@
       %li= link_to "Senda einkaskilaboð", new_message_path(:receiver => @user.username)
     - link :blocks, :create, :user => @user.username do
       %li= link_to "Hunsa", blocks_path(:user => @user.username), :confirm => "Ertu viss um að þú viljir hunsa þennan notanda?", :method => :post
+    - link :blocks, :destroy, :id => @user.username do
+      %li= link_to "Afhunsa", block_path, :method => :delete
   %h2= @user.username
   
   %dl
