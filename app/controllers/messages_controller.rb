@@ -29,7 +29,7 @@ class MessagesController < ApplicationController
   
   def new
     @message = Message.new
-    @message.receiver = User.find_by_username! params[:receiver]
+    @message.receiver = User.find_by_username params[:receiver]
     @reply = Message.find params[:reply] if params[:reply]
     
     if @reply
