@@ -1,6 +1,16 @@
 # encoding: utf-8
 
 module ApplicationHelper
+  def title(page_title)
+    content_for(:title) do
+      if page_title
+        page_title + " | "
+      else
+        "Deildu"
+      end
+    end
+  end
+  
   def markdown(text)
     options = {:autolink => true, :no_intra_emphasis => true, :fenced_code_blocks => true}
     find_and_preserve(Redcarpet::Markdown.new(Redcarpet::Render::HTML.new({:hard_wrap => true, :filter_html => true}), options).render(text))

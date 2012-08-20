@@ -1,7 +1,9 @@
 .section
   - if @reply
+    - title "Svara skilaboði"
     %h2 Svara skilaboði
   - else
+    - title "Ný skilaboð"
     %h2 Ný skilaboð
   
   = form_for @message do |f|
