@@ -273,4 +273,8 @@ class User < ActiveRecord::Base
   def sent_messages
     Message.where(:sender_id => self.id)
   end
+  
+  def to_s
+    self.username
+  end
 end
