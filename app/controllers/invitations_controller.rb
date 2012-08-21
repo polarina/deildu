@@ -20,8 +20,9 @@ class InvitationsController < ApplicationController
   
   def index
     @invitation = Invitation.new
-    @invitees = current_user.invitees
-    respond_with(@invitations = Invitation.where(:user_id => current_user.id))
+    @invitees = current_user.invitees.order{created_at.desc}
+    @invitations = Invitation.where(:user_id => current_user.id).order{created_at.desc}
+    respond_with @invitations
   end
   
   def destroy
