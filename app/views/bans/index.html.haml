@@ -9,14 +9,16 @@
       %tr
         %th Skráð
         %th.nowrap Skráð af
-        %th.expand Subnet
+        %th.nowrap Subnet
+        %th.expand Ástæða
     %tbody
       - @bans.each do |ban|
         %tr
           %td.nowrap= ban.created_at
           %td= link_to ban.user.username, ban.user
           %td= link_to ban.address, ban
+          %td= ban.reason
       - if @bans.empty?
         %tr
-          %td.notice{:colspan => 3}
+          %td.notice{:colspan => 4}
             Engin bönn.
