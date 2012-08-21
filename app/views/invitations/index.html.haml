@@ -20,11 +20,13 @@
       %tr
         %th Skráningardagur
         %th.expand Notendanafn
+        %th Kredits
     %tbody
       - @invitees.each do |invitee|
         %tr
           %td.nowrap= invitee.created_at
           %td= link_to invitee.username, invitee
+          %td.nowrap!= pretty_kredits invitee.kredits
       - if @invitees.empty?
         %tr
           %td.notice{:colspan => 2}
