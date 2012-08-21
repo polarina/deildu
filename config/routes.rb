@@ -36,6 +36,10 @@ Deildu::Application.routes.draw do
       post 'auth'
       delete 'auth'
     end
+    
+    member do
+      get 'posts'
+    end
   end
   
   match "announce" => "torrents#announce", :via => :get

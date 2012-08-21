@@ -37,9 +37,12 @@ module ApplicationHelper
   end
   
   def message(options, &block)
-    user = options[:user]
-    created_at = options[:created_at]
     content = options[:content]
+    user ||= options[:user]
+    user ||= content.user
+    created_at ||= options[:created_at]
+    created_at ||= content.created_at
+    
     avatar = options[:avatar]
     avatar = false unless current_user.show_avatars
     avatar = false if options[:anonymous] == true

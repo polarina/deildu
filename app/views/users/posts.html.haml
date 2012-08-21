@@ -1,0 +1,11 @@
+- title @user.username + " > Spjallpóstar"
+.section
+  %h2
+    = link_to @user.username, @user
+    &gt; Spjallpóstar
+  
+  .messages
+    = paginated_section @posts do
+      - @posts.each do |post|
+        - message :content => post do
+          %li= link_to post.topic.subject, forum_topic_path(post.topic.forum, post.topic, :page => "p#{post.id.to_s}", :anchor => "post#{post.id.to_s}")

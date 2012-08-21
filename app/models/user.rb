@@ -13,6 +13,7 @@ class User < ActiveRecord::Base
   has_many :bans
   has_many :blocks
   has_many :news
+  has_many :posts
   has_many :reports
   
   attr_accessible :username,
@@ -166,6 +167,7 @@ class User < ActiveRecord::Base
         },
         "users" => {
           "auth" => true,
+          "posts" => true,
           "show" => true,
         },
       },

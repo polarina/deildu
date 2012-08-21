@@ -67,4 +67,9 @@ class UsersController < ApplicationController
       redirect_to root_path
     end
   end
+  
+  def posts
+    @user = User.find_by_username! params[:id]
+    @posts = @user.posts.order{created_at.desc}.includes(:user, :topic, {:topic => :forum}).page(params[:page])
+  end
 end
